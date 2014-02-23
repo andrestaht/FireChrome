@@ -1,0 +1,21 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Login extends CI_Controller {
+
+	function __construct() {
+		parent::__construct();
+	}
+
+	/**
+	 * Login Page for this controller.
+	 */
+	public function index() {
+		$this->load->helper(
+			array('form')
+		);
+		$this->load->view('login');
+	}
+}
+
+/* End of file login.php */
+/* Location: ./application/controllers/login.php */
