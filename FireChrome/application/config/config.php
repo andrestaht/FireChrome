@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url'] = 'http://localhost/FireChrome/';
+$config['base_url'] = 'http://localhost/FireChrome/FireChrome/';
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ $config['base_url'] = 'http://localhost/FireChrome/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'REALLY_LONG_NUMBER';
+$config['encryption_key'] = 'MO5wS3aBUbgcWE9EB2V1Tt93Zrq7D33I';
 
 /*
 |--------------------------------------------------------------------------

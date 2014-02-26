@@ -5,15 +5,27 @@
 		<title>FireChrome - Logi Sisse</title>
 	</head>
 	<body>
-		<?php echo validation_errors(); ?>
-		<?php echo form_open('verifylogin'); ?>
-			<label for="username">Kasutajanimi: </label>
-			<input type="text" id="username" name="username" />
-			<br/>
-			<label for="password">Parool: </label>
-			<input type="password" id="password" name="password" />
-			<br/>
-			<input type="submit" value="Login"/>
-		</form>
+		<?php
+			echo validation_errors();
+
+			echo form_open('login/loginValidation');
+
+			echo "<p>E-mail: ";
+			echo form_input('email', $this->input->post('email'));
+			echo "</p>";
+
+			echo "<p>Parool: ";
+			echo form_password('password');
+			echo "</p>";
+
+			echo "<p>";
+			echo form_submit('login_submit', 'Logi Sisse');
+			echo "</p>";
+
+			echo "<p>Pole kasutajat? registreeri <a href='" . base_url() . "register" . "'>siin</a>!</p>";
+			echo "<p>Unustasid <a href='" . base_url() . "login/forgotPassword" . "'>parooli</a>?</p>";
+
+			echo form_close();
+		?>
 	</body>
 </html>

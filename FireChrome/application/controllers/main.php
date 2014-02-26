@@ -4,23 +4,10 @@ class Main extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/home
-	 *	- or -  
-	 * 		http://example.com/index.php/home/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index() {
-		if ($this->session->userdata('logged_in')) {
-			$session_data = $this->session->userdata('logged_in');
-			$data['username'] = $session_data['username'];
+		if ($this->session->userdata('is_logged_in')) {
+			$data['isLoggedIn'] = $this->session->userdata('is_logged_in');
 
 			$this->load->view('header', $data);
 		}
@@ -31,9 +18,15 @@ class Main extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	function logout() {
-		$this->session->unset_userdata('logged_in');
-		session_destroy();
+	public function members() {
+		
+	}
+
+	/**
+	 * Logout function
+	 */
+	public function logout() {
+		$this->session->sess_destroy();
 
 		redirect('main', 'refresh');
 	}
