@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>FireChrome - Seaded</title>
-	</head>
-	<body>
-		<p>Siia tuleb kasutaja seadete leht.</p>
-	</body>
-</html>
+<h1>Seaded</h1>
+<a id="change-password-link" href="javascript:void(0);">Muuda parooli</a>
+
+<?php
+	echo validation_errors();
+
+	echo form_open('main/changePasswordValidation', array('id' => 'change-password-form'));
+
+	echo "<p>Praegune parool: ";
+	echo form_password('password');
+	echo "</p>";
+
+	echo "<p>Uus parool: ";
+	echo form_password('npassword');
+	echo "</p>";
+
+	echo "<p>Uus parool uuesti: ";
+	echo form_password('anpassword');
+	echo "</p>";
+
+	echo "<p>";
+	echo form_submit('change_password_submit', 'Muuda parool');
+	echo "</p>";
+
+	echo form_close();
+?>
+<!-- VAJA KINDLASTI ÄRA KOLIDA SIIT SEE ERALDI JAVASCRIPTI FAILI! -->
+<script type="text/javascript">
+	$('#change-password-link').click(function() {
+		$('#change-password-form').slideDown();
+	});
+</script>

@@ -17,7 +17,9 @@ class Login extends CI_Controller {
 	 * Login Page login function.
 	 */
 	public function login() {
+		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
 		$this->load->view('login');
+		$this->load->view('footer');
 	}
 
 	/**
@@ -38,9 +40,7 @@ class Login extends CI_Controller {
 
 			redirect('main', 'refresh');
 		}
-		else {
-			$this->load->view('login');
-		}
+		$this->login();
 	}
 
 	public function validateCredentials() {
@@ -49,19 +49,20 @@ class Login extends CI_Controller {
 		if ($this->users->canLogIn()) {
 			return true;
 		}
-		else {
-			$this->form_validation->set_message('validate_credentials', 'Vale e-mail/parool!');
+		$this->form_validation->set_message('validate_credentials', 'Vale e-mail/parool!');
 
-			return false;
-		}
+		return false;
 	}
 
 	public function forgotPassword() {
+		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
 		$this->load->view('forgotPassword');
+		$this->load->view('footer');
 	}
 
 	public function resetPassword() {
 		$password = substr(hash('sha512', rand()), 0, 12);
+		$email = $this->input->post('email');
 
 		$this->load->library('form_validation');
 
@@ -83,21 +84,26 @@ class Login extends CI_Controller {
 			// send email message and key to user
 			$this->email->message($message);
 
-			if ($this->users->resetPasswordByEmail($this->input->post('email'), $password)) {
-				if ($this->email->send()) {
-					echo "E-mail saadetud!";
+			if ($this->users->doesEmailExists($email)) {
+				if ($this->users->changePasswordByEmail($email, $password)) {
+					if ($this->email->send()) {
+						echo "E-mail saadetud!";
+					}
+					else {
+						echo "E-maili saatmine ebaõnnestus!";
+					}
+					redirect('login');
 				}
 				else {
-					echo "E-maili saatmine ebaõnnestus!";
+					echo "Parooli ei uuendatud!";
 				}
-				redirect('login');
 			}
 			else {
-				echo "Parooli ei uuendatud!";
+				echo "Sellist e-maili ei eksisteeri";
 			}
 		}
 		else {
-			$this->load->view('forgotPassword');
+			$this->forgotPassword();
 		}
 	}
 }

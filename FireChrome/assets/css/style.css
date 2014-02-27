@@ -1,0 +1,29 @@
+body {
+	background: grey;
+}
+#logo {
+	width: 100px;
+	height: 100px;
+	background: red;
+	display: block;
+	margin: 20px;
+}
+#wrap {
+	max-width: 1366px;
+	margin: 0 auto;
+}
+#header {
+	background: green;
+	padding: 40px;
+}
+#content {
+	background: white;
+	padding: 40px;
+}
+#footer {
+	background: yellow;
+	padding: 40px;
+}
+#change-password-form {
+	display: none;
+}

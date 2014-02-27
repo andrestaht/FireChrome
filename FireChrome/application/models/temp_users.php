@@ -15,9 +15,7 @@ class Temp_Users extends CI_Model {
 		if ($query) {
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	public function isKeyValid($key) {
@@ -28,8 +26,6 @@ class Temp_Users extends CI_Model {
 		if ($query->num_rows() == 1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 }

@@ -3,8 +3,6 @@ class Users extends CI_Model {
 
 	private $name = 'users';
 
-	private $validfields = array('id', 'username', 'password', 'email', 'level');
-
 	public function canLogIn() {
 		$this->db->where('email', $this->input->post('email'));
 		$this->db->where('password', md5($this->input->post('password')));
@@ -14,9 +12,7 @@ class Users extends CI_Model {
 		if ($query->num_rows() == 1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	public function addUser($key) {
@@ -40,12 +36,10 @@ class Users extends CI_Model {
 
 			return $data;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
-	public function resetPasswordByEmail($email, $password) {
+	public function changePasswordByEmail($email, $password) {
 		$this->db->where('email', $email);
 		$this->db->update(
 			$this->name,
@@ -54,5 +48,27 @@ class Users extends CI_Model {
 			)
 		);
 		return true;
+	}
+
+	public function doesEmailExists($email) {
+		$this->db->where('email', $email);
+		$query = $this->db->get($this->name);
+
+		if ($query->num_rows() == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	public function isPasswordCorrectByEmail($email, $password) {
+		$this->db->where('email', $email);
+		$this->db->where('password', md5($password));
+
+		$query = $this->db->get($this->name);
+
+		if ($query->num_rows() == 1) {
+			return true;
+		}
+		return false;
 	}
 }

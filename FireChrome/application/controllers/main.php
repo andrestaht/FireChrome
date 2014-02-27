@@ -3,23 +3,53 @@
 class Main extends CI_Controller {
 
 	/**
-	 * Index Page for this controller.
+	 * Index page for main controller.
 	 */
 	public function index() {
-		if ($this->session->userdata('is_logged_in')) {
-			$data['isLoggedIn'] = $this->session->userdata('is_logged_in');
-
-			$this->load->view('header', $data);
-		}
-		else {
-			$this->load->view('header');
-		}
+		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
 		$this->load->view('home');
 		$this->load->view('footer');
 	}
 
+	/**
+	 * Settings page for main controller.
+	 */
 	public function settings() {
-		$this->load->view('settings');
+		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
+
+		if ($this->session->userdata('is_logged_in')) {
+			$this->load->view('settings');
+		}
+		else {
+			$this->load->view('noAccess');
+		}
+		$this->load->view('footer');
+	}
+
+	/**
+	 * Changed password validation function.
+	 */
+	public function changePasswordValidation() {
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('password', 'Praegune parool', 'required|trim');
+		$this->form_validation->set_rules('npassword', 'Uus parool', 'required|trim');
+		$this->form_validation->set_rules('anpassword', 'Uus parool uuesti', 'required|trim|matches[npassword]');
+
+		if ($this->form_validation->run()) {
+			$this->load->model('users');
+			$email = $this->session->userdata('email');
+
+			if ($this->users->isPasswordCorrectByEmail($email, $this->input->post('password'))) {
+				if ($this->users->changePasswordByEmail($email, $this->input->post('npassword'))) {
+					echo "Parool edukalt muudetud";
+				}
+				else {
+					echo "Parooli ei muudetud";
+				}
+			}
+		}
+		$this->settings();
 	}
 
 	/**
@@ -27,7 +57,6 @@ class Main extends CI_Controller {
 	 */
 	public function logout() {
 		$this->session->sess_destroy();
-
 		redirect('main', 'refresh');
 	}
 }
