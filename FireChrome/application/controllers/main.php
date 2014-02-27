@@ -18,8 +18,8 @@ class Main extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function members() {
-		
+	public function settings() {
+		$this->load->view('settings');
 	}
 
 	/**
