@@ -11,5 +11,5 @@
 		<a id="register" href="<?php echo base_url() . "register" ?>">Registreeri</a>
 		<?php } else { ?>
 		<a id="logout" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
-		<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi v‰lja</a>
+		<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi v√§lja</a>
 		<?php } ?>

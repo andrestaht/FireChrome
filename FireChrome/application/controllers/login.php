@@ -88,7 +88,7 @@ class Login extends CI_Controller {
 					echo "E-mail saadetud!";
 				}
 				else {
-					echo "E-maili saatmine ebaınnestus!";
+					echo "E-maili saatmine eba√µnnestus!";
 				}
 				redirect('login');
 			}
