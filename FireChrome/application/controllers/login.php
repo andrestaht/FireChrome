@@ -32,8 +32,14 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('password', 'Parool', 'required|trim|xss_clean|md5');
 
 		if ($this->form_validation->run()) {
+			$this->load->model('users');
+
+			$userData = $this->users->getUserDataByEmail($this->input->post('email'));
+
 			$data = array(
-				'email' => $this->input->post('email'),
+				'username' => $userData->username,
+				'email' => $userData->email,
+				'level' => $userData->level,
 				'is_logged_in' => 1,
 			);
 			$this->session->set_userdata($data);

@@ -71,4 +71,12 @@ class Users extends CI_Model {
 		}
 		return false;
 	}
+
+	public function getUserDataByEmail($email) {
+		$this->db->where('email', $email);
+
+		$query = $this->db->get($this->name);
+
+		return $query->row();
+	}
 }

@@ -16,6 +16,7 @@
 				<a id="login" href="<?php echo base_url() . "login" ?>">Logi Sisse</a>
 				<a id="register" href="<?php echo base_url() . "register" ?>">Registreeri</a>
 				<?php } else { ?>
+				<h1>Tere <?php echo $username; ?>!</h1>
 				<a id="settings" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
 				<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
 				<?php } ?>
