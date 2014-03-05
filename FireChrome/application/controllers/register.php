@@ -40,7 +40,7 @@ class Register extends CI_Controller {
 			$key = md5(uniqid());
 
 			// email send data
-			$this->email->from('andres.taht@gmail.com', 'FireChrome');
+			$this->email->from($this->config->item('email'), 'FireChrome');
 			$this->email->to($this->input->post('email'));
 			$this->email->subject('Kinnitage oma kasutaja');
 

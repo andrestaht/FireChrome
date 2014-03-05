@@ -73,7 +73,7 @@ class Login extends CI_Controller {
 			$this->load->library('email', array('mailtype' => 'html'));
 
 			// email send data
-			$this->email->from('andres.taht@gmail.com', 'FireChrome');
+			$this->email->from($this->config->item('email'), 'FireChrome');
 			$this->email->to($this->input->post('email'));
 			$this->email->subject('Teie parool');
 

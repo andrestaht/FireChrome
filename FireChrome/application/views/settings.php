@@ -24,9 +24,3 @@
 
 	echo form_close();
 ?>
-<!-- VAJA KINDLASTI ÄRA KOLIDA SIIT SEE ERALDI JAVASCRIPTI FAILI! -->
-<script type="text/javascript">
-	$('#change-password-link').click(function() {
-		$('#change-password-form').slideDown();
-	});
-</script>
