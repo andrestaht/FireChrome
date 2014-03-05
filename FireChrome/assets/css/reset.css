@@ -10,15 +10,19 @@ tbody,tfoot,thead,tr,th,td {
 	font-size: 100%;
 	background: transparent;
 }
+
 body {
 	line-height: 1;
 }
+
 ol,ul {
 	list-style: none;
 }
+
 blockquote,q {
 	quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -36,6 +40,7 @@ q:after {
 ins {
 	text-decoration: none;
 }
+
 del {
 	text-decoration: line-through;
 }

@@ -1,29 +1,56 @@
+/**
+ * BODY
+ */
 body {
-	background: grey;
+	background-color: grey;
 }
+
+/**
+ * LOGO
+ */
 #logo {
 	width: 100px;
 	height: 100px;
-	background: red;
+	background-color: red;
 	display: block;
 	margin: 20px;
 }
+
+/**
+ * WRAP
+ */
 #wrap {
 	max-width: 1366px;
 	margin: 0 auto;
 }
+
+/**
+ * HEADER
+ */
 #header {
-	background: green;
+	background-color: green;
 	padding: 40px;
 }
+
+/**
+ * CONTENT
+ */
 #content {
-	background: white;
+	background-color: white;
 	padding: 40px;
 }
+
+/**
+ * FOOTER
+ */
 #footer {
-	background: yellow;
+	background-color: yellow;
 	padding: 40px;
 }
+
+/**
+ * FORMS
+ */
 #change-password-form {
 	display: none;
 }
