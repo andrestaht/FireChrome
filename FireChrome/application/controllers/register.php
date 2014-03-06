@@ -14,7 +14,7 @@ class Register extends CI_Controller {
 	}
 
 	public function register() {
-		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
+		$this->load->view('header');
 		$this->load->view('register');
 		$this->load->view('footer');
 	}
@@ -32,7 +32,7 @@ class Register extends CI_Controller {
 // 		$this->form_validation->set_message('is_unique[users.email]', 'Selline e-mail juba eksisteerib!');
 
 		if ($this->form_validation->run()) {
-			$this->load->model('temp_users');
+			$this->load->model('tempUsersModel');
 
 			$this->load->library('email', array('mailtype' => 'html'));
 
@@ -53,7 +53,7 @@ class Register extends CI_Controller {
 			// send email message and key to user
 			$this->email->message($message);
 			
-			if ($this->temp_users->addUser($key)) {
+			if ($this->tempUsersModel->addUser($key)) {
 				if ($this->email->send()) {
 					echo "E-mail saadetud!";
 				}
@@ -70,11 +70,11 @@ class Register extends CI_Controller {
 	}
 
 	public function registrationConfirmation($key) {
-		$this->load->model('users');
-		$this->load->model('temp_users');
+		$this->load->model('usersModel');
+		$this->load->model('tempUsersModel');
 
-		if ($this->temp_users->isKeyValid($key)) {
-			if ($newUser = $this->users->addUser($key)) {
+		if ($this->tempUsersModel->isKeyValid($key)) {
+			if ($newUser = $this->usersModel->addUser($key)) {
 				$data = array(
 					'username' => $newUser['username'],
 					'email' => $newUser['email'],

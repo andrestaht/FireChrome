@@ -1,7 +1,7 @@
 <?php
 	echo validation_errors();
 
-	echo form_open('register/registerValidation');
+	echo form_open('register/registerValidation', array('id' => 'register-form'));
 
 	echo "<p>Kasutajanimi: ";
 	echo form_input('username', $this->input->post('username'));
@@ -20,7 +20,7 @@
 	echo "</p>";
 
 	echo "<p>";
-	echo form_submit('register_submit', 'Registreeri');
+	echo form_submit('register-submit-btn', 'Registreeri');
 	echo "</p>";
 
 	echo form_close();

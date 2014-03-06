@@ -2,18 +2,23 @@
 
 class Main extends CI_Controller {
 
+	private $sessionData = array();
+
 	/**
 	 * Index page for main controller.
 	 */
 	public function index() {
-		$sessionData = array(
+		$this->sessionData = array(
+			'user_id' => $this->session->userdata('user_id'),
 			'username' => $this->session->userdata('username'),
 			'email' => $this->session->userdata('email'),
 			'level' => $this->session->userdata('level'),
 			'isLoggedIn' => $this->session->userdata('is_logged_in'),
 		);
-		$this->load->view('header', $sessionData);
-		$this->load->view('home');
+		$this->load->model('newsModel');
+
+		$this->load->view('header', $this->sessionData);
+		$this->load->view('home', array('news' => $this->newsModel->getAllVisibleNews()));
 		$this->load->view('footer');
 	}
 
@@ -21,13 +26,14 @@ class Main extends CI_Controller {
 	 * Settings page for main controller.
 	 */
 	public function settings() {
-		$sessionData = array(
+		$this->sessionData = array(
+			'user_id' => $this->session->userdata('user_id'),
 			'username' => $this->session->userdata('username'),
 			'email' => $this->session->userdata('email'),
 			'level' => $this->session->userdata('level'),
 			'isLoggedIn' => $this->session->userdata('is_logged_in'),
 		);
-		$this->load->view('header', $sessionData);
+		$this->load->view('header', $this->sessionData);
 
 		if ($this->session->userdata('is_logged_in')) {
 			$this->load->view('settings');
@@ -49,11 +55,11 @@ class Main extends CI_Controller {
 		$this->form_validation->set_rules('anpassword', 'Uus parool uuesti', 'required|trim|matches[npassword]');
 
 		if ($this->form_validation->run()) {
-			$this->load->model('users');
+			$this->load->model('usersModel');
 			$email = $this->session->userdata('email');
 
-			if ($this->users->isPasswordCorrectByEmail($email, $this->input->post('password'))) {
-				if ($this->users->changePasswordByEmail($email, $this->input->post('npassword'))) {
+			if ($this->usersModel->isPasswordCorrectByEmail($email, $this->input->post('password'))) {
+				if ($this->usersModel->changePasswordByEmail($email, $this->input->post('npassword'))) {
 					echo "Parool edukalt muudetud";
 				}
 				else {

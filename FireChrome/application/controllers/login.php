@@ -17,7 +17,7 @@ class Login extends CI_Controller {
 	 * Login Page login function.
 	 */
 	public function login() {
-		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
+		$this->load->view('header');
 		$this->load->view('login');
 		$this->load->view('footer');
 	}
@@ -32,11 +32,12 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('password', 'Parool', 'required|trim|xss_clean|md5');
 
 		if ($this->form_validation->run()) {
-			$this->load->model('users');
+			$this->load->model('usersModel');
 
-			$userData = $this->users->getUserDataByEmail($this->input->post('email'));
+			$userData = $this->usersModel->getUserDataByEmail($this->input->post('email'));
 
 			$data = array(
+				'user_id' => $userData->id,
 				'username' => $userData->username,
 				'email' => $userData->email,
 				'level' => $userData->level,
@@ -50,9 +51,9 @@ class Login extends CI_Controller {
 	}
 
 	public function validateCredentials() {
-		$this->load->model('users');
+		$this->load->model('usersModel');
 
-		if ($this->users->canLogIn()) {
+		if ($this->usersModel->canLogIn()) {
 			return true;
 		}
 		$this->form_validation->set_message('validate_credentials', 'Vale e-mail/parool!');
@@ -75,7 +76,7 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('email', 'E-mail', 'required|trim|valid_email');
 
 		if ($this->form_validation->run()) {
-			$this->load->model('users');
+			$this->load->model('usersModel');
 			$this->load->library('email', array('mailtype' => 'html'));
 
 			// email send data
@@ -90,8 +91,8 @@ class Login extends CI_Controller {
 			// send email message and key to user
 			$this->email->message($message);
 
-			if ($this->users->doesEmailExists($email)) {
-				if ($this->users->changePasswordByEmail($email, $password)) {
+			if ($this->usersModel->doesEmailExists($email)) {
+				if ($this->usersModel->changePasswordByEmail($email, $password)) {
 					if ($this->email->send()) {
 						echo "E-mail saadetud!";
 					}
