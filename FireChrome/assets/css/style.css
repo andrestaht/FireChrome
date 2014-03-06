@@ -9,19 +9,21 @@ body {
  * LOGO
  */
 #logo {
-	width: 100px;
-	height: 100px;
-	background-color: red;
+	width: 120px;
+	height: 120px;
+	background-image: url(../img/header/logo.png);
 	display: block;
 	margin: 20px;
+	float: left;
 }
 
 /**
  * WRAP
  */
 #wrap {
-	max-width: 1366px;
+	max-width: 1280px;
 	margin: 0 auto;
+	overflow: hidden;
 }
 
 /**
@@ -30,6 +32,8 @@ body {
 #header {
 	background-color: green;
 	padding: 40px;
+	float: left;
+	width: 100%;
 }
 
 /**
@@ -38,6 +42,8 @@ body {
 #content {
 	background-color: white;
 	padding: 40px;
+	float: left;
+	width: 100%;
 }
 
 /**
@@ -46,6 +52,8 @@ body {
 #footer {
 	background-color: yellow;
 	padding: 40px;
+	float: left;
+	width: 100%;
 }
 
 /**

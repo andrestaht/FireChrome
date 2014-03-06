@@ -11,7 +11,7 @@
 	<body>
 		<div id="wrap">
 			<div id="header">
-			<p>See on header.</p>
+				<a href="<?php echo base_url() ?>"><span id="logo"></span></a>
 				<?php if (empty($isLoggedIn)) { ?>
 				<a id="login" href="<?php echo base_url() . "login" ?>">Logi Sisse</a>
 				<a id="register" href="<?php echo base_url() . "register" ?>">Registreeri</a>
@@ -20,6 +20,5 @@
 				<a id="settings" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
 				<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
 				<?php } ?>
-				<a href="<?php echo base_url() ?>"><span id="logo"></span></a>
 			</div>
 			<div id="content">
