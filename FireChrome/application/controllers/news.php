@@ -70,7 +70,7 @@ class News extends CI_Controller {
 					'title' => $this->input->post('title'),
 					'content' => $this->input->post('content'),
 					'img_url' => base_url() . $uploadPath . "/" . $uploadData['orig_name'],
-					'is_visible' => $this->input->post('isVisible'),
+					'is_visible' => $this->input->post('isVisible') !== false ? 1 : null,
 				);
 				$id = $this->newsModel->addNews($data);
 
