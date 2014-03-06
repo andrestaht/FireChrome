@@ -21,7 +21,13 @@ class Main extends CI_Controller {
 	 * Settings page for main controller.
 	 */
 	public function settings() {
-		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
+		$sessionData = array(
+			'username' => $this->session->userdata('username'),
+			'email' => $this->session->userdata('email'),
+			'level' => $this->session->userdata('level'),
+			'isLoggedIn' => $this->session->userdata('is_logged_in'),
+		);
+		$this->load->view('header', $sessionData);
 
 		if ($this->session->userdata('is_logged_in')) {
 			$this->load->view('settings');

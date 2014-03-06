@@ -18,7 +18,13 @@ class News extends CI_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index() {
-		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
+		$sessionData = array(
+			'username' => $this->session->userdata('username'),
+			'email' => $this->session->userdata('email'),
+			'level' => $this->session->userdata('level'),
+			'isLoggedIn' => $this->session->userdata('is_logged_in'),
+		);
+		$this->load->view('header', $sessionData);
 		$this->load->view('news');
 		$this->load->view('footer');
 	}
