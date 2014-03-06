@@ -69,4 +69,17 @@ class NewsModel extends CI_Model {
 		$this->db->where('id', $id);
 		$this->db->delete($this->name);
 	}
+
+	/**
+	 * Modifies news row by id
+	 *
+	 * @param int $id
+	 * @param array $data
+	 */
+	public function modifyNewsById($id, $data) {
+		$this->db->where('id', $id);
+		$this->db->update($this->name, $data);
+
+		return true;
+	}
 }

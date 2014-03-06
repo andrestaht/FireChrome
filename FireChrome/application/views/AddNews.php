@@ -5,19 +5,19 @@ echo validation_errors();
 echo form_open_multipart('news/addNewsValidation', array('id' => 'add-news-form'));
 
 echo "<p>Pealkiri: ";
-echo form_input('title');
+echo form_input('title', $this->input->post('title'));
 echo "</p>";
 
 echo "<p>Sisu: ";
-echo form_textarea('content');
+echo form_textarea('content', $this->input->post('content'));
 echo "</p>";
 
 echo "<p>Pilt: ";
-echo form_upload('image');
+echo form_upload('image', $this->input->post('image'));
 echo "</p>";
 
 echo "<p>Avalik: ";
-echo form_checkbox('isVisible');
+echo form_checkbox('isVisible', $this->input->post('isVisible'));
 echo "</p>";
 
 echo "<p>";
