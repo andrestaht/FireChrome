@@ -1,4 +1,4 @@
-<?php if ($level == 5) { ?>
+<?php if ($level > 1) { ?>
 <a id="delete-news-btn" href="<?php echo base_url() . "news/deleteNews/" . $id ?>">Kustuta uudis</a>
 <?php } ?>
 <h1><?php echo $title ?></h1>

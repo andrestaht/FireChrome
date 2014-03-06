@@ -1,4 +1,4 @@
-<?php if ($level == 5) { ?>
+<?php if ($level > 1) { ?>
 <a id="add-news-btn" href="<?php echo base_url() . "news/addNews" ?>">Lisa uudis</a>
 <?php } ?>
 <?php foreach ($news as $rows) { ?>
