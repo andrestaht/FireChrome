@@ -50,9 +50,9 @@ class Main extends CI_Controller {
 	public function changePasswordValidation() {
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('password', 'Praegune parool', 'required|trim');
-		$this->form_validation->set_rules('npassword', 'Uus parool', 'required|trim');
-		$this->form_validation->set_rules('anpassword', 'Uus parool uuesti', 'required|trim|matches[npassword]');
+		$this->form_validation->set_rules('password', 'Praegune parool', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('npassword', 'Uus parool', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('anpassword', 'Uus parool uuesti', 'required|trim|matches[npassword]|xss_clean');
 
 		if ($this->form_validation->run()) {
 			$this->load->model('usersModel');

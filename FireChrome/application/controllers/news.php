@@ -46,8 +46,8 @@ class News extends CI_Controller {
 	public function addNewsValidation() {
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|is_unique[news.title]');
-		$this->form_validation->set_rules('content', 'Sisu', 'required|trim');
+		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|is_unique[news.title]|xss_clean');
+		$this->form_validation->set_rules('content', 'Sisu', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('image', 'Pilt');
 		$this->form_validation->set_rules('isVisible', 'Avalik');
 
@@ -123,8 +123,8 @@ class News extends CI_Controller {
 	public function modifyNewsValidation($id) {
 		$this->load->library('form_validation');
 	
-		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|is_unique[news.title]');
-		$this->form_validation->set_rules('content', 'Sisu', 'required|trim');
+		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|is_unique[news.title]|xss_clean');
+		$this->form_validation->set_rules('content', 'Sisu', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('image', 'Pilt');
 		$this->form_validation->set_rules('isVisible', 'Avalik');
 	

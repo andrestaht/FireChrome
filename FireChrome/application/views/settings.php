@@ -27,7 +27,8 @@ echo form_submit ( 'change_password_submit', 'Muuda parool' );
 echo "</p>";
 
 echo form_close ();
-if ($level > 1) { ?>
+if ($level > 5) {
+	?>
 <li><a id="usercontrol" href="<?php echo base_url() . "UserControl" ?>">Halda
 			Kasutajaid</a></li>
 <?php } ?>
