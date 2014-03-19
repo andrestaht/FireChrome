@@ -24,3 +24,4 @@
 
 	echo form_close();
 ?>
+<a id="usercontroll" href="<?php echo base_url() . "UserControl" ?>">Halda Kasutajaid</a>
