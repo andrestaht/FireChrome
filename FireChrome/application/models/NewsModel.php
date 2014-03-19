@@ -52,12 +52,34 @@ class NewsModel extends CI_Model {
 	 *
 	 * @return array $data
 	 */
-	public function getAllVisibleNews() {
+	public function getVisibleNews($start = null) {
+		$this->load->model('usersModel');
+
 		$this->db->where('is_visible', true);
+		$this->db->order_by('date', 'DESC');
+
+		if ($start != null) {
+			$this->db->where('date < ', $start);
+		}
+		$this->db->limit('1');
 
 		$newsQuery = $this->db->get($this->name);
+		$rows = $newsQuery->result();
 
-		return $newsQuery->result();
+		$data = array();
+
+		foreach ($rows as $row) {
+			$data[] = array(
+				'id' => $row->id,
+				'title' => $row->title,
+				'author' => $this->usersModel->getAuthorById($row->user_id),
+				'date' => $row->date,
+				'content' => $row->content,
+				'imgUrl' => $row->img_url,
+				'isVisible' => $row->is_visible,
+			);
+		}
+		return $data;
 	}
 
 	/**

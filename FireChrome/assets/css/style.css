@@ -16,6 +16,24 @@ body {
 	margin: 20px;
 	float: left;
 }
+.loading {
+	background-image: url(../img/ajax-loader.gif);
+	width: 32px;
+	height: 32px;
+	display: none;
+	float: left;
+	margin: 84px;
+	position: relative;
+}
+
+/**
+ * BUTTONS
+ */
+#load-news-btn {
+	float: left;
+	margin-top: 30px;
+	display: block;
+}
 
 /**
  * WRAP
@@ -30,10 +48,33 @@ body {
  * HEADER
  */
 #header {
-	background-color: lightgreen;
+	background-color: green;
 	padding: 40px;
 	float: left;
 	width: 100%;
+}
+
+/**
+ * NEWS
+ */
+#news-feed {
+	float: left;
+	width: 100%;
+}
+.news {
+	float: left;
+	display: block;
+	padding: 0 20px;
+}
+.news a {
+	text-decoration: none;
+}
+.news-title {
+	display: block;
+	font-weight: bold;
+	text-align: center;
+	margin: 15px 0;
+	font-size: 20px;
 }
 
 /**

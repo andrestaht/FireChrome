@@ -24,8 +24,6 @@ class News extends CI_Controller {
 
 	/**
 	 * Add news function.
-	 * 
-	 * @param int $id
 	 */
 	public function addNews() {
 		$this->sessionData = array(
@@ -157,6 +155,17 @@ class News extends CI_Controller {
 			}
 		}
 		$this->modifyNews();
+	}
+
+	/**
+	 * Load news function.
+	 * 
+	 * @param $start
+	 */
+	public function loadNews($start) {
+		$this->load->model('newsModel');
+
+		echo html_entity_decode(json_encode($this->newsModel->getVisibleNews($start)));
 	}
 }
 
