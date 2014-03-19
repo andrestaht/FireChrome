@@ -13,12 +13,12 @@
 			<div id="header">
 				<a href="<?php echo base_url() ?>"><span id="logo"></span></a>
 				<?php if (empty($isLoggedIn)) { ?>
-				<a id="login-btn" href="<?php echo base_url() . "login" ?>">Logi Sisse</a>
-				<a id="register-btn" href="<?php echo base_url() . "register" ?>">Registreeri</a>
+				<a id="login" href="<?php echo base_url() . "login" ?>">Logi Sisse</a>
+				<a id="register" href="<?php echo base_url() . "register" ?>">Registreeri</a>
 				<?php } else { ?>
 				<h1>Tere <?php echo $username; ?>!</h1>
-				<a id="settings-btn" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
-				<a id="logout-btn" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
+				<a id="settings" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
+				<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
 				<?php } ?>
 			</div>
 			<div id="content">

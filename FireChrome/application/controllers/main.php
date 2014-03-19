@@ -18,7 +18,7 @@ class Main extends CI_Controller {
 		$this->load->model('newsModel');
 
 		$this->load->view('header', $this->sessionData);
-		$this->load->view('home', array('news' => $this->newsModel->getVisibleNews()));
+		$this->load->view('home', array('news' => $this->newsModel->getAllVisibleNews()));
 		$this->load->view('footer');
 	}
 
