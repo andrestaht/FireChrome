@@ -1,6 +1,8 @@
 <div id="UserControlDiv">
 
-	<form id="UserControlForm" action='<?php echo base_url()."userControl/updateUsers"?>' method="post">
+	<form id="UserControlForm"
+		action='<?php echo base_url()."userControl/updateUsers"?>'
+		method="post">
 		<table id="UserControlTable">
 
 			<tr>
@@ -40,7 +42,7 @@
 	?>
 
 		</table>
-		<input type="submit" value="Salvesta">
+		<p><input type="submit" name="change_levels_submit" value="Salvesta" /></p>
 	</form>
 <?php echo $confirmation?>
 </div>

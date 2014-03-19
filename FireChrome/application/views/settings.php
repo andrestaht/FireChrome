@@ -1,7 +1,7 @@
 <h1>Seaded</h1>
 <ul>
 	<li><a id="change-password-link" href="javascript:void(0);">Muuda
-			parooli</a></li>
+			parooli</a>
 
 <?php
 echo validation_errors ();
@@ -27,6 +27,7 @@ echo form_submit ( 'change_password_submit', 'Muuda parool' );
 echo "</p>";
 
 echo form_close ();
+echo "</li>";
 if ($level > 5) {
 	?>
 <li><a id="usercontrol" href="<?php echo base_url() . "UserControl" ?>">Halda
