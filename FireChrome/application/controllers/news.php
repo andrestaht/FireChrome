@@ -15,10 +15,10 @@ class News extends CI_Controller {
 			'level' => $this->session->userdata('level'),
 			'isLoggedIn' => $this->session->userdata('is_logged_in'),
 		);
-		$this->load->model('newsModel');
+		$this->load->model('news_model');
 
 		$this->load->view('header', $this->sessionData);
-		$this->load->view('news', $this->newsModel->getNewsById($id));
+		$this->load->view('news', $this->news_model->get_news_by_id($id));
 		$this->load->view('footer');
 	}
 
@@ -27,7 +27,7 @@ class News extends CI_Controller {
 	 * 
 	 * @param int $id
 	 */
-	public function addNews() {
+	public function add_news() {
 		$this->sessionData = array(
 			'user_id' => $this->session->userdata('user_id'),
 			'username' => $this->session->userdata('username'),
@@ -36,14 +36,14 @@ class News extends CI_Controller {
 			'isLoggedIn' => $this->session->userdata('is_logged_in'),
 		);
 		$this->load->view('header', $this->sessionData);
-		$this->load->view('addNews');
+		$this->load->view('add_news');
 		$this->load->view('footer');
 	}
 
 	/**
 	 * Added news validation function.
 	 */
-	public function addNewsValidation() {
+	public function add_news_validation() {
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|is_unique[news.title]|xss_clean');
@@ -52,7 +52,7 @@ class News extends CI_Controller {
 		$this->form_validation->set_rules('isVisible', 'Avalik');
 
 		if ($this->form_validation->run()) {
-			$this->load->model('newsModel');
+			$this->load->model('news_model');
 
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
@@ -74,14 +74,14 @@ class News extends CI_Controller {
 					'img_url' => base_url() . $uploadPath . "/" . $uploadData['orig_name'],
 					'is_visible' => $this->input->post('isVisible') !== false ? 1 : null,
 				);
-				$id = $this->newsModel->addNews($data);
+				$id = $this->news_model->add_news($data);
 
 				if (!empty($id)) {
 					redirect('news/index/' . $id);
 				}
 			}
 		}
-		$this->addNews();
+		$this->add_news();
 	}
 
 	/**
@@ -89,10 +89,10 @@ class News extends CI_Controller {
 	 * 
 	 * @param int $id
 	 */
-	public function deleteNews($id) {
-		$this->load->model('newsModel');
+	public function delete_news($id) {
+		$this->load->model('news_model');
 
-		$this->newsModel->deleteNewsById($id);
+		$this->news_model->delete_news_by_id($id);
 
 		redirect('main');
 	}
@@ -102,7 +102,7 @@ class News extends CI_Controller {
 	 * 
 	 * @param int $id
 	 */
-	public function modifyNews($id) {
+	public function modify_news($id) {
 		$this->sessionData = array(
 			'user_id' => $this->session->userdata('user_id'),
 			'username' => $this->session->userdata('username'),
@@ -110,17 +110,17 @@ class News extends CI_Controller {
 			'level' => $this->session->userdata('level'),
 			'isLoggedIn' => $this->session->userdata('is_logged_in'),
 		);
-		$this->load->model('newsModel');
+		$this->load->model('news_model');
 
 		$this->load->view('header', $this->sessionData);
-		$this->load->view('modifyNews', $this->newsModel->getNewsById($id));
+		$this->load->view('modify_news', $this->news_model->get_news_by_id($id));
 		$this->load->view('footer');
 	}
 
 	/**
 	 * Modified news validation function.
 	 */
-	public function modifyNewsValidation($id) {
+	public function modify_news_validation($id) {
 		$this->load->library('form_validation');
 	
 		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|is_unique[news.title]|xss_clean');
@@ -129,7 +129,7 @@ class News extends CI_Controller {
 		$this->form_validation->set_rules('isVisible', 'Avalik');
 	
 		if ($this->form_validation->run()) {
-			$this->load->model('newsModel');
+			$this->load->model('news_model');
 	
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
@@ -151,12 +151,12 @@ class News extends CI_Controller {
 					'img_url' => base_url() . $uploadPath . "/" . $uploadData['orig_name'],
 					'is_visible' => $this->input->post('isVisible') !== false ? 1 : null,
 				);
-				if ($this->newsModel->modifyNewsById($id, $data)) {
+				if ($this->news_model->modify_news_by_id($id, $data)) {
 					redirect('news/index/' . $id);
 				}
 			}
 		}
-		$this->modifyNews();
+		$this->modify_news($id);
 	}
 }
 

@@ -1,7 +1,7 @@
 <?php if (! defined ( 'BASEPATH' )) exit ( 'No direct script access allowed' );
 
 
-class userControl extends CI_Controller {
+class User_control extends CI_Controller {
 	
 	private $sessionData = array();
 	
@@ -14,14 +14,14 @@ class userControl extends CI_Controller {
 				'isLoggedIn' => $this->session->userdata('is_logged_in'),
 		);
 		
-		$this->load->model ( "UsersModel" );
-		$data ["users"] = $this->UsersModel->getAllUsers ();
+		$this->load->model ( "user_model" );
+		$data ["users"] = $this->user_model->get_all_users ();
 		$data ["confirmation"] = "";
 		$this->load->view('header', $this->sessionData);
-		$this->load->view ( "UserControl", $data );
+		$this->load->view ( "user_control", $data );
 		$this->load->view ( "footer");
 	}
-	public function updateUsers() {
+	public function update_users() {
 		$this->sessionData = array(
 				'user_id' => $this->session->userdata('user_id'),
 				'username' => $this->session->userdata('username'),
@@ -30,7 +30,7 @@ class userControl extends CI_Controller {
 				'isLoggedIn' => $this->session->userdata('is_logged_in'),
 		);
 
-		$this->load->model ( "UsersModel" );
+		$this->load->model ( "user_model" );
 		
 		$newArray = array ();
 		
@@ -40,17 +40,20 @@ class userControl extends CI_Controller {
 					'level' => $level 
 			);
 		}
-		$this->UsersModel->updateLevels ( $newArray );
+		$this->user_model->update_user_levels ( $newArray );
 
 		
 		
-		$this->load->model ( "UsersModel" );
+		$this->load->model ( "user_model" );
 		
-		$data ["users"] = $this->UsersModel->getAllUsers ();
+		$data ["users"] = $this->user_model->get_all_users ();
 		$data ["confirmation"] = "Andmed muudetud";
 		;
 		$this->load->view('header', $this->sessionData);
-		$this->load->view ( "UserControl", $data );
+		$this->load->view ( "user_control", $data );
 		$this->load->view ( "footer");
 	}
 }
+
+/* End of file user_control.php */
+/* Location: ./application/controllers/user_control.php */

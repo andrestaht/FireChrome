@@ -1,7 +1,7 @@
 <?php
-class UsersModel extends CI_Model {
-	private $name = 'users';
-	public function canLogIn() {
+class User_model extends CI_Model {
+	private $name = 'user';
+	public function can_log_in() {
 		$this->db->where ( 'email', $this->input->post ( 'email' ) );
 		$this->db->where ( 'password', md5 ( $this->input->post ( 'password' ) ) );
 		
@@ -12,9 +12,9 @@ class UsersModel extends CI_Model {
 		}
 		return false;
 	}
-	public function addUser($key) {
+	public function add_user($key) {
 		$this->db->where ( 'key', $key );
-		$tempUsersQuery = $this->db->get ( 'temp_users' );
+		$tempUsersQuery = $this->db->get ( 'temp_user' );
 		
 		if ($tempUsersQuery) {
 			$row = $tempUsersQuery->row ();
@@ -29,20 +29,20 @@ class UsersModel extends CI_Model {
 		}
 		if ($usersQuery) {
 			$this->db->where ( 'key', $key );
-			$this->db->delete ( 'temp_users' );
+			$this->db->delete ( 'temp_user' );
 			
 			return $data;
 		}
 		return false;
 	}
-	public function changePasswordByEmail($email, $password) {
+	public function change_password_by_email($email, $password) {
 		$this->db->where ( 'email', $email );
 		$this->db->update ( $this->name, array (
 				'password' => md5 ( $password ) 
 		) );
 		return true;
 	}
-	public function doesEmailExists($email) {
+	public function does_email_exists($email) {
 		$this->db->where ( 'email', $email );
 		$query = $this->db->get ( $this->name );
 		
@@ -51,7 +51,7 @@ class UsersModel extends CI_Model {
 		}
 		return false;
 	}
-	public function isPasswordCorrectByEmail($email, $password) {
+	public function is_password_correct_by_email($email, $password) {
 		$this->db->where ( 'email', $email );
 		$this->db->where ( 'password', md5 ( $password ) );
 		
@@ -62,19 +62,19 @@ class UsersModel extends CI_Model {
 		}
 		return false;
 	}
-	public function getUserDataByEmail($email) {
+	public function get_user_data_by_email($email) {
 		$this->db->where ( 'email', $email );
 		
 		$query = $this->db->get ( $this->name );
 		
 		return $query->row ();
 	}
-	public function getAllUsers() {
-		$query = $this->db->query ( "SELECT * FROM users" );
+	public function get_all_users() {
+		$query = $this->db->get( $this->name );
 		return $query->result ();
 	}
-	public function updateLevels($updatedData) {
-		$this->db->update_batch("users",$updatedData,"username");
+	public function update_user_levels($updatedData) {
+		$this->db->update_batch($this->name,$updatedData,"username");
 		}
 
 	}

@@ -6,7 +6,7 @@
 <?php
 echo validation_errors ();
 
-echo form_open ( 'main/changePasswordValidation', array (
+echo form_open ( 'main/change_password_validation', array (
 		'id' => 'change-password-form' 
 ) );
 
@@ -30,7 +30,7 @@ echo form_close ();
 echo "</li>";
 if ($level > 5) {
 	?>
-<li><a id="usercontrol" href="<?php echo base_url() . "UserControl" ?>">Halda
+<li><a id="usercontrol" href="<?php echo base_url() . "user_control" ?>">Halda
 			Kasutajaid</a></li>
 <?php } ?>
 </ul>

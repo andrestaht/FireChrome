@@ -2,7 +2,7 @@
 
 echo validation_errors();
 
-echo form_open_multipart('news/addNewsValidation', array('id' => 'add-news-form'));
+echo form_open_multipart('news/add_news_validation', array('id' => 'add-news-form'));
 
 echo "<p>Pealkiri: ";
 echo form_input('title', $this->input->post('title'));

@@ -1,9 +1,9 @@
 <?php
-class TempUsersModel extends CI_Model {
+class TempUser_model extends CI_Model {
 
-	private $name = 'temp_users';
+	private $name = 'temp_user';
 
-	public function addUser($key) {
+	public function add_user($key) {
 		$data = array(
 			'username' => $this->input->post('username'),
 			'password' => md5($this->input->post('password')),
@@ -18,7 +18,7 @@ class TempUsersModel extends CI_Model {
 		return false;
 	}
 
-	public function isKeyValid($key) {
+	public function is_key_valid($key) {
 		$this->db->where('key', $key);
 		
 		$query = $this->db->get($this->name);

@@ -1,5 +1,5 @@
 <?php
-class NewsModel extends CI_Model {
+class News_model extends CI_Model {
 
 	private $name = 'news';
 
@@ -13,7 +13,7 @@ class NewsModel extends CI_Model {
 	 * @param array $data
 	 * @return int $id
 	 */
-	public function addNews(array $data) {
+	public function add_news(array $data) {
 		$this->db->insert($this->name, $data);
 
 		return $this->db->insert_id();
@@ -25,7 +25,7 @@ class NewsModel extends CI_Model {
 	 * @param int $id
 	 * @return array $data
 	 */
-	public function getNewsById($id) {
+	public function get_news_by_id($id) {
 		$this->db->where('id', $id);
 
 		$newsQuery = $this->db->get($this->name);
@@ -33,7 +33,7 @@ class NewsModel extends CI_Model {
 
 		$this->db->where('id', $newsData->user_id);
 
-		$usersQuery = $this->db->get('users');
+		$usersQuery = $this->db->get('user');
 		$userData = $usersQuery->row();
 
 		return array(
@@ -52,7 +52,7 @@ class NewsModel extends CI_Model {
 	 *
 	 * @return array $data
 	 */
-	public function getAllVisibleNews() {
+	public function get_all_visible_news() {
 		$this->db->where('is_visible', true);
 
 		$newsQuery = $this->db->get($this->name);
@@ -65,7 +65,7 @@ class NewsModel extends CI_Model {
 	 *
 	 * @param int $id
 	 */
-	public function deleteNewsById($id) {
+	public function delete_news_by_id($id) {
 		$this->db->where('id', $id);
 		$this->db->delete($this->name);
 	}
@@ -76,7 +76,7 @@ class NewsModel extends CI_Model {
 	 * @param int $id
 	 * @param array $data
 	 */
-	public function modifyNewsById($id, $data) {
+	public function modify_news_by_id($id, $data) {
 		$this->db->where('id', $id);
 		$this->db->update($this->name, $data);
 

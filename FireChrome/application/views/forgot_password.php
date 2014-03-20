@@ -1,14 +1,14 @@
 <?php
 	echo validation_errors();
 
-	echo form_open('login/resetPassword', array('id' => 'forgot-password-form'));
+	echo form_open('login/reset_password', array('id' => 'forgot-password-form'));
 
 	echo "<p>E-mail: ";
 	echo form_input('email');
 	echo "</p>";
 	
 	require_once(APPPATH.'libraries/recaptcha-php-1.11/recaptchalib.php');
-	$publickey = "6Lf2zO8SAAAAAE4y2rx2lIM8nbqry-o5bYmveuJ5"; // you got this from the signup page
+	$publickey = "6Lcaz-8SAAAAAMzviTKe6kjuSma7nU7SYjin91rJ"; // you got this from the signup page
 	echo recaptcha_get_html($publickey);
 
 	echo "<p>";

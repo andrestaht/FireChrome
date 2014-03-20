@@ -25,16 +25,16 @@ class Login extends CI_Controller {
 	/**
 	 * Login Page login validation function.
 	 */
-	public function loginValidation() {
+	public function login_validation() {
 		$this->load->library('form_validation');
 		
-		$this->form_validation->set_rules('email', 'E-mail', 'required|trim|xss_clean|callback_validateCredentials');
+		$this->form_validation->set_rules('email', 'E-mail', 'required|trim|xss_clean|callback_validate_credentials');
 		$this->form_validation->set_rules('password', 'Parool', 'required|trim|xss_clean|md5');
 
 		if ($this->form_validation->run()) {
-			$this->load->model('usersModel');
+			$this->load->model('user_model');
 
-			$userData = $this->usersModel->getUserDataByEmail($this->input->post('email'));
+			$userData = $this->user_model->get_user_data_by_email($this->input->post('email'));
 
 			$data = array(
 				'user_id' => $userData->id,
@@ -50,10 +50,10 @@ class Login extends CI_Controller {
 		$this->login();
 	}
 
-	public function validateCredentials() {
-		$this->load->model('usersModel');
+	public function validate_credentials() {
+		$this->load->model('user_model');
 
-		if ($this->usersModel->canLogIn()) {
+		if ($this->user_model->can_log_in()) {
 			return true;
 		}
 		$this->form_validation->set_message('validate_credentials', 'Vale e-mail/parool!');
@@ -61,13 +61,13 @@ class Login extends CI_Controller {
 		return false;
 	}
 
-	public function forgotPassword() {
+	public function forgot_password() {
 		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
-		$this->load->view('forgotPassword');
+		$this->load->view('forgot_password');
 		$this->load->view('footer');
 	}
 
-	public function resetPassword() {
+	public function reset_password() {
 		$password = substr(hash('sha512', rand()), 0, 12);
 		$email = $this->input->post('email');
 
@@ -76,7 +76,7 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('email', 'E-mail', 'required|trim|valid_email|xss_clean');
 		
 		require_once (APPPATH . 'libraries/recaptcha-php-1.11/recaptchalib.php');
-		$privatekey = "6Lf2zO8SAAAAAAVvgcU6L-iuD-eCKwdOPEFAuRY0";
+		$privatekey = "6Lcaz-8SAAAAADvOBApdQbLtAhIcb2_RBTSw2HDC";
 		$resp = recaptcha_check_answer ( $privatekey, $_SERVER ["REMOTE_ADDR"], $_POST ["recaptcha_challenge_field"], $_POST ["recaptcha_response_field"] );
 		$data ["captchaerror"] = "";
 		if (! $resp->is_valid) {
@@ -84,7 +84,7 @@ class Login extends CI_Controller {
 		}
 
 		if ($this->form_validation->run() & $resp->is_valid) {
-			$this->load->model('usersModel');
+			$this->load->model('user_model');
 			$this->load->library('email', array('mailtype' => 'html'));
 
 			// email send data
@@ -99,8 +99,8 @@ class Login extends CI_Controller {
 			// send email message and key to user
 			$this->email->message($message);
 
-			if ($this->usersModel->doesEmailExists($email)) {
-				if ($this->usersModel->changePasswordByEmail($email, $password)) {
+			if ($this->user_model->does_email_exists($email)) {
+				if ($this->user_model->change_password_by_email($email, $password)) {
 					if ($this->email->send()) {
 						echo "E-mail saadetud!";
 					}
@@ -118,7 +118,7 @@ class Login extends CI_Controller {
 			}
 		}
 		else {
-			$this->forgotPassword();
+			$this->forgot_password();
 		}
 	}
 }

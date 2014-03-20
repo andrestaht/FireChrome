@@ -17,20 +17,20 @@ class Register extends CI_Controller {
 		$this->load->view ( 'register', $data );
 		$this->load->view ( 'footer' );
 	}
-	public function registerValidation() {
+	public function register_validation() {
 		$this->load->library ( 'form_validation' );
 		
-		$this->form_validation->set_rules ( 'username', 'Kasutajanimi', 'required|trim|is_unique[users.username]|xss_clean' );
-		$this->form_validation->set_rules ( 'email', 'E-mail', 'required|trim|valid_email|is_unique[users.email]|xss_clean' );
+		$this->form_validation->set_rules ( 'username', 'Kasutajanimi', 'required|trim|is_unique[user.username]|xss_clean' );
+		$this->form_validation->set_rules ( 'email', 'E-mail', 'required|trim|valid_email|is_unique[user.email]|xss_clean' );
 		$this->form_validation->set_rules ( 'password', 'Parool', 'required|trim|xss_clean' );
 		$this->form_validation->set_rules ( 'cpassword', 'Parool uuesti', 'required|trim|matches[password]|xss_clean' );
 		
 		// EI TOIMI HETKEL NII NAGU PEAKS
-		// $this->form_validation->set_message('is_unique[users.username]', 'Selline kasutajanimi juba eksisteerib!');
-		// $this->form_validation->set_message('is_unique[users.email]', 'Selline e-mail juba eksisteerib!');
+		// $this->form_validation->set_message('is_unique[user.username]', 'Selline kasutajanimi juba eksisteerib!');
+		// $this->form_validation->set_message('is_unique[user.email]', 'Selline e-mail juba eksisteerib!');
 		
 		require_once (APPPATH . 'libraries/recaptcha-php-1.11/recaptchalib.php');
-		$privatekey = "6Lf2zO8SAAAAAAVvgcU6L-iuD-eCKwdOPEFAuRY0";
+		$privatekey = "6Lcaz-8SAAAAADvOBApdQbLtAhIcb2_RBTSw2HDC";
 		$resp = recaptcha_check_answer ( $privatekey, $_SERVER ["REMOTE_ADDR"], $_POST ["recaptcha_challenge_field"], $_POST ["recaptcha_response_field"] );
 		$data ["captchaerror"] = "";
 		if (! $resp->is_valid) {
@@ -39,7 +39,7 @@ class Register extends CI_Controller {
 		
 		if ($this->form_validation->run () & $resp->is_valid) {
 			$data ["captchaerror"] = "";
-			$this->load->model ( 'tempUsersModel' );
+			$this->load->model ( 'tempuser_model' );
 			
 			$this->load->library ( 'email', array (
 					'mailtype' => 'html' 
@@ -57,12 +57,12 @@ class Register extends CI_Controller {
 			$message = "<p>Aitäh registreerimast!</p>";
 			$message .= "<p>Teie kasutajanimi on: " . $this->input->post ( 'username' ) . "</p>";
 			$message .= "<p>Teie parool on: " . $this->input->post ( 'password' ) . "</p>";
-			$message .= "<p><a href='" . base_url () . "register/registrationConfirmation/" . $key . "'>Vajutage siia</a>, et kasutaja aktiveerida!</p>";
+			$message .= "<p><a href='" . base_url () . "register/register_confirmation/" . $key . "'>Vajutage siia</a>, et kasutaja aktiveerida!</p>";
 			
 			// send email message and key to user
 			$this->email->message ( $message );
 			
-			if ($this->tempUsersModel->addUser ( $key )) {
+			if ($this->tempuser_model->add_user ( $key )) {
 				if ($this->email->send ()) {
 					echo "E-mail saadetud!";
 				} else {
@@ -75,12 +75,12 @@ class Register extends CI_Controller {
 		}
 		$this->register ( $data );
 	}
-	public function registrationConfirmation($key) {
-		$this->load->model ( 'usersModel' );
-		$this->load->model ( 'tempUsersModel' );
+	public function register_confirmation($key) {
+		$this->load->model ( 'user_model' );
+		$this->load->model ( 'tempuser_model' );
 		
-		if ($this->tempUsersModel->isKeyValid ( $key )) {
-			if ($newUser = $this->usersModel->addUser ( $key )) {
+		if ($this->tempuser_model->is_key_valid ( $key )) {
+			if ($newUser = $this->user_model->add_user ( $key )) {
 				$data = array (
 						'username' => $newUser ['username'],
 						'email' => $newUser ['email'],

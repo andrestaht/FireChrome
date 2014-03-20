@@ -2,7 +2,7 @@
 	echo validation_errors();
 	echo $captchaerror;
 
-	echo form_open('register/registerValidation', array('id' => 'register-form'));
+	echo form_open('register/register_validation', array('id' => 'register-form'));
 
 	echo "<p>Kasutajanimi: ";
 	echo form_input('username', $this->input->post('username'));
@@ -21,7 +21,7 @@
 	echo "</p>";
 	
 	require_once(APPPATH.'libraries/recaptcha-php-1.11/recaptchalib.php');
-	$publickey = "6Lf2zO8SAAAAAE4y2rx2lIM8nbqry-o5bYmveuJ5"; // you got this from the signup page
+	$publickey = "6Lcaz-8SAAAAAMzviTKe6kjuSma7nU7SYjin91rJ"; // you got this from the signup page
 	echo recaptcha_get_html($publickey);
 
 	echo "<p>";

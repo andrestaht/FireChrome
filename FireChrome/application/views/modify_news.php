@@ -2,7 +2,7 @@
 
 echo validation_errors();
 
-echo form_open_multipart('news/modifyNewsValidation/' . $id, array('id' => 'modify-news-form'));
+echo form_open_multipart('news/modify_news_validation/' . $id, array('id' => 'modify-news-form'));
 
 echo "<p>Pealkiri: ";
 echo form_input('title', $title);

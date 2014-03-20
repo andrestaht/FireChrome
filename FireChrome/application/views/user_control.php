@@ -1,7 +1,7 @@
 <div id="UserControlDiv">
 
 	<form id="UserControlForm"
-		action='<?php echo base_url()."userControl/updateUsers"?>'
+		action='<?php echo base_url()."user_control/update_users"?>'
 		method="post">
 		<table id="UserControlTable">
 
