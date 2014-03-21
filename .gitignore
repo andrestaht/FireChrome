@@ -3,3 +3,10 @@ FireChrome/.buildpath
 FireChrome/.settings/org.eclipse.php.core.prefs
 FireChrome/.settings/org.eclipse.wst.common.project.facet.core.xml
 FireChrome/.travis.yml
+FireChrome/application/config/database.php
+*/config/development
+*/logs/log-*.php
+*/logs/!index.html
+*/cache/*
+*/cache/!index.html
+*/cache/!.htaccess
