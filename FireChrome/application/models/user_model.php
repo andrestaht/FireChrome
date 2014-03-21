@@ -70,6 +70,9 @@ class User_model extends CI_Model {
 		return $query->row ();
 	}
 	public function get_all_users() {
+		$this->db->select("username, email, level");
+		$this->db->order_by("level", "desc");
+		$this->db->order_by("username", "asc");
 		$query = $this->db->get( $this->name );
 		return $query->result ();
 	}

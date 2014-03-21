@@ -18,7 +18,9 @@ class News extends CI_Controller {
 		$this->load->model('news_model');
 
 		$this->load->view('header', $this->sessionData);
+		
 		$this->load->view('news', $this->news_model->get_news_by_id($id));
+
 		$this->load->view('footer');
 	}
 
@@ -36,7 +38,15 @@ class News extends CI_Controller {
 			'isLoggedIn' => $this->session->userdata('is_logged_in'),
 		);
 		$this->load->view('header', $this->sessionData);
-		$this->load->view('add_news');
+	
+		if ($this->session->userdata('is_logged_in') && $this->session->userdata('level') > 1) {
+			$this->load->view('add_news');
+		}
+		else {
+			$data["logged_in"]= ( $this->session->userdata('is_logged_in')? TRUE : FALSE );
+			$this->load->view('no_access',$data);
+		}
+		
 		$this->load->view('footer');
 	}
 
@@ -90,11 +100,28 @@ class News extends CI_Controller {
 	 * @param int $id
 	 */
 	public function delete_news($id) {
-		$this->load->model('news_model');
-
-		$this->news_model->delete_news_by_id($id);
-
-		redirect('main');
+		
+		$this->sessionData = array(
+				'user_id' => $this->session->userdata('user_id'),
+				'username' => $this->session->userdata('username'),
+				'email' => $this->session->userdata('email'),
+				'level' => $this->session->userdata('level'),
+				'isLoggedIn' => $this->session->userdata('is_logged_in'),
+		);
+		
+		if ($this->session->userdata('is_logged_in') && $this->session->userdata('level') > 1) {
+			
+			$this->load->model('news_model');
+			$this->news_model->delete_news_by_id($id);
+			redirect('main');
+			
+		}
+		else {
+			$data["logged_in"]= ( $this->session->userdata('is_logged_in')? TRUE : FALSE );
+			$this->load->view('header',$this->sessionData);
+			$this->load->view('no_access',$data);
+			$this->load->view('footer');
+		}
 	}
 
 	/**
@@ -113,7 +140,16 @@ class News extends CI_Controller {
 		$this->load->model('news_model');
 
 		$this->load->view('header', $this->sessionData);
-		$this->load->view('modify_news', $this->news_model->get_news_by_id($id));
+		
+		if ($this->session->userdata('is_logged_in') && $this->session->userdata('level') > 1) {
+			$this->load->view('modify_news', $this->news_model->get_news_by_id($id));
+		}
+		else {
+			$data["logged_in"]= ( $this->session->userdata('is_logged_in')? TRUE : FALSE );
+			$this->load->view('no_access',$data);
+		}
+		
+
 		$this->load->view('footer');
 	}
 

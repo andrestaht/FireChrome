@@ -1,2 +1,5 @@
 <p>Teil puuduvad õigused sel lehel viibimiseks!</p>
-<a href="<?php echo base_url() . "login" ?>">Logige sisse siit!</a>
+<?php if ( ! $logged_in){
+echo "<a href=". base_url() . "login'>Logige sisse siit!</a>";
+}
+?>

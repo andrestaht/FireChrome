@@ -17,8 +17,17 @@ class User_control extends CI_Controller {
 		$this->load->model ( "user_model" );
 		$data ["users"] = $this->user_model->get_all_users ();
 		$data ["confirmation"] = "";
+		
 		$this->load->view('header', $this->sessionData);
-		$this->load->view ( "user_control", $data );
+		
+		if ($this->session->userdata('is_logged_in') && $this->session->userdata('level') > 5) {
+			$this->load->view ( "user_control", $data );
+		}
+		else {
+			$data["logged_in"]= ( $this->session->userdata('is_logged_in')? TRUE : FALSE );
+			$this->load->view('no_access',$data);
+		}
+
 		$this->load->view ( "footer");
 	}
 	public function update_users() {

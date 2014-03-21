@@ -39,7 +39,8 @@ class Main extends CI_Controller {
 			$this->load->view('settings');
 		}
 		else {
-			$this->load->view('no_access');
+			$data["logged_in"]= ( $this->session->userdata('is_logged_in')? TRUE : FALSE );
+			$this->load->view('no_access',$data);
 		}
 		$this->load->view('footer');
 	}
