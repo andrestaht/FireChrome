@@ -1,43 +1,27 @@
 <?php if (! defined ( 'BASEPATH' )) exit ( 'No direct script access allowed' );
 
 
-class User_control extends CI_Controller {
-	
-	private $sessionData = array();
+class User_control extends MY_Controller {
 	
 	public function index() {
-		$this->sessionData = array(
-				'user_id' => $this->session->userdata('user_id'),
-				'username' => $this->session->userdata('username'),
-				'email' => $this->session->userdata('email'),
-				'level' => $this->session->userdata('level'),
-				'isLoggedIn' => $this->session->userdata('is_logged_in'),
-		);
 		
 		$this->load->model ( "user_model" );
 		$data ["users"] = $this->user_model->get_all_users ();
 		$data ["confirmation"] = "";
 		
-		$this->load->view('header', $this->sessionData);
+		$this->load->view('header', $this->get_session_data());
 		
-		if ($this->session->userdata('is_logged_in') && $this->session->userdata('level') > 5) {
+		if ($this->session->userdata('is_logged_in') && $this->user_has_access(5)) {
 			$this->load->view ( "user_control", $data );
 		}
 		else {
-			$data["logged_in"]= ( $this->session->userdata('is_logged_in')? TRUE : FALSE );
+			$data["logged_in"]= ( $this->session->userdata('is_logged_in'));
 			$this->load->view('no_access',$data);
 		}
 
 		$this->load->view ( "footer");
 	}
 	public function update_users() {
-		$this->sessionData = array(
-				'user_id' => $this->session->userdata('user_id'),
-				'username' => $this->session->userdata('username'),
-				'email' => $this->session->userdata('email'),
-				'level' => $this->session->userdata('level'),
-				'isLoggedIn' => $this->session->userdata('is_logged_in'),
-		);
 
 		$this->load->model ( "user_model" );
 		
@@ -58,7 +42,7 @@ class User_control extends CI_Controller {
 		$data ["users"] = $this->user_model->get_all_users ();
 		$data ["confirmation"] = "Andmed muudetud";
 		;
-		$this->load->view('header', $this->sessionData);
+		$this->load->view('header', $this->get_session_data());
 		$this->load->view ( "user_control", $data );
 		$this->load->view ( "footer");
 	}

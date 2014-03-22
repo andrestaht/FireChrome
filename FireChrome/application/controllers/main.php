@@ -1,23 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Main extends CI_Controller {
-
-	private $sessionData = array();
+class Main extends MY_Controller {
 
 	/**
 	 * Index page for main controller.
 	 */
 	public function index() {
-		$this->sessionData = array(
-			'user_id' => $this->session->userdata('user_id'),
-			'username' => $this->session->userdata('username'),
-			'email' => $this->session->userdata('email'),
-			'level' => $this->session->userdata('level'),
-			'isLoggedIn' => $this->session->userdata('is_logged_in'),
-		);
+
 		$this->load->model('news_model');
 
-		$this->load->view('header', $this->sessionData);
+		$this->load->view('header', $this->get_session_data());
 		$this->load->view('home', array('news' => $this->news_model->get_all_visible_news()));
 		$this->load->view('footer');
 	}
@@ -26,20 +18,14 @@ class Main extends CI_Controller {
 	 * Settings page for main controller.
 	 */
 	public function settings() {
-		$this->sessionData = array(
-			'user_id' => $this->session->userdata('user_id'),
-			'username' => $this->session->userdata('username'),
-			'email' => $this->session->userdata('email'),
-			'level' => $this->session->userdata('level'),
-			'isLoggedIn' => $this->session->userdata('is_logged_in'),
-		);
-		$this->load->view('header', $this->sessionData);
+
+		$this->load->view('header', $this->get_session_data());
 
 		if ($this->session->userdata('is_logged_in')) {
 			$this->load->view('settings');
 		}
 		else {
-			$data["logged_in"]= ( $this->session->userdata('is_logged_in')? TRUE : FALSE );
+			$data["logged_in"]= FALSE;
 			$this->load->view('no_access',$data);
 		}
 		$this->load->view('footer');
