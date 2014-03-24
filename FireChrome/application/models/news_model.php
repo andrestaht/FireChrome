@@ -52,9 +52,7 @@ class News_model extends CI_Model {
 	 *
 	 * @return array $data
 	 */
-	public function get_all_visible_news() {
-		$this->db->where('is_visible', true);
-
+	public function get_all_news() {
 		$newsQuery = $this->db->get($this->name);
 
 		return $newsQuery->result();

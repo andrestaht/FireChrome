@@ -27,7 +27,7 @@ class Login extends MY_Controller {
 	 */
 	public function login_validation() {
 		$this->load->library('form_validation');
-		
+
 		$this->form_validation->set_rules('email', 'E-mail', 'required|trim|xss_clean|callback_validate_credentials');
 		$this->form_validation->set_rules('password', 'Parool', 'required|trim|xss_clean|md5');
 
@@ -62,7 +62,7 @@ class Login extends MY_Controller {
 	}
 
 	public function forgot_password() {
-		$this->load->view('header', array('isLoggedIn' => $this->session->userdata('is_logged_in')));
+		$this->load->view('header', array('is_logged_in' => $this->session->userdata('is_logged_in')));
 		$this->load->view('forgot_password');
 		$this->load->view('footer');
 	}
@@ -74,16 +74,20 @@ class Login extends MY_Controller {
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('email', 'E-mail', 'required|trim|valid_email|xss_clean');
-		
+
 		require_once (APPPATH . 'libraries/recaptcha-php-1.11/recaptchalib.php');
+
 		$privatekey = "6Lcaz-8SAAAAADvOBApdQbLtAhIcb2_RBTSw2HDC";
-		$resp = recaptcha_check_answer ( $privatekey, $_SERVER ["REMOTE_ADDR"], $_POST ["recaptcha_challenge_field"], $_POST ["recaptcha_response_field"] );
+
+		$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+
 		$data ["captchaerror"] = "";
-		if (! $resp->is_valid) {
-			$data ["captchaerror"] = "The reCAPTCHA wasn't entered correctly. Go back and try it again.";
+
+		if (!$resp->is_valid) {
+			$data["captchaerror"] = "The reCAPTCHA wasn't entered correctly. Go back and try it again.";
 		}
 
-		if ($this->form_validation->run() & $resp->is_valid) {
+		if ($this->form_validation->run() && $resp->is_valid) {
 			$this->load->model('user_model');
 			$this->load->library('email', array('mailtype' => 'html'));
 

@@ -12,7 +12,7 @@
 		<div id="wrap">
 			<div id="header">
 				<a href="<?php echo base_url() ?>"><span id="logo"></span></a>
-				<?php if (empty($isLoggedIn)) { ?>
+				<?php if (empty($is_logged_in)) { ?>
 				<a id="login" href="<?php echo base_url() . "login" ?>">Logi Sisse</a>
 				<a id="register" href="<?php echo base_url() . "register" ?>">Registreeri</a>
 				<?php } else { ?>
@@ -20,5 +20,8 @@
 				<a id="settings" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
 				<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
 				<?php } ?>
+				<div id="current-time">
+					<span></span>
+				</div>
 			</div>
 			<div id="content">
