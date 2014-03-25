@@ -21,13 +21,26 @@ $(document).ready(function() {
 	});
 });
 
+var noMoreData = false;
+
 function loadNews(loadNewsCount, newsPerLoad) {
 	$.ajax({
 		type: "GET",
 		url: 'http://localhost/FireChrome/FireChrome/news/get_news/' + loadNewsCount + '/' + newsPerLoad, //vaja ära muuta
 		dataType: 'html',
+		beforeSend: function() {
+			if (noMoreData == false) {
+				$('.ajax-loader').show();
+			}
+		},
 		success: function(data) {
-			$('#news-feed').append(data);
+			if (data) {
+				$('.ajax-loader').before(data);
+				$('.ajax-loader').hide();
+			}
+			else {
+				noMoreData = true;
+			}
 		}
 	});
 }
