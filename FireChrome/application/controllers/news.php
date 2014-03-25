@@ -158,6 +158,32 @@ class News extends MY_Controller {
 		}
 		$this->modify_news($id);
 	}
+
+	/**
+	 * Gets news for main page
+	 */
+	public function get_news($position, $limit, $category = null) {
+		$this->load->model('news_model');
+		header("Content-Type: text/html charset=UTF-8\r\n");
+
+		$results = $this->news_model->get_news($position, $limit, $category);
+		$session_data = $this->get_session_data();
+
+		if (!empty($results)) {
+			foreach ($results as $result) {
+				if ($result->is_visible || $session_data['level'] > 1) {
+					echo '<div class="news"><a href="' . base_url() . 'news/index/' . $result->id . '">';
+					echo '<img src="' . $result->img_url . '" alt="' . $result->title . '" width="250" height="250" />';
+					echo '<h1 class="news-title">' . $result->title . '</h1></a>';
+
+					if ($result->is_visible) {
+						echo '<h1 class="news-is-invisible">Uudis pole nähtav</h1>';
+					}
+					echo '</div>';
+				}
+			}
+		}
+	}
 }
 
 /* End of file main.php */

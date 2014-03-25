@@ -59,6 +59,26 @@ class News_model extends CI_Model {
 	}
 
 	/**
+	 * Gets news for home page
+	 *
+	 * @param int $postition
+	 * @param int limit
+	 * @param int $category
+	 * @return array $data
+	 */
+	public function get_news($position, $limit, $category) {
+		$this->db->order_by('id', 'desc');
+		$this->db->limit($limit, ($position * $limit));
+
+		if ($category != null) {
+			$this->db->where('category', $category);
+		}
+		$newsQuery = $this->db->get($this->name);
+	
+		return $newsQuery->result();
+	}
+
+	/**
 	 * Deletes news row by id
 	 *
 	 * @param int $id

@@ -9,7 +9,7 @@ class Main extends MY_Controller {
 		$this->load->model('news_model');
 
 		$this->load->view('header', $this->get_session_data());
-		$this->load->view('home', array('news' => $this->news_model->get_all_news()));
+		$this->load->view('home');
 		$this->load->view('footer');
 	}
 
