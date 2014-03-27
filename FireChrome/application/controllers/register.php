@@ -10,9 +10,10 @@ class Register extends MY_Controller {
 	 * Register Page for this controller.
 	 */
 	public function index() {
-		$data["captchaerror"] = "";
+		$msg['error'] = "";
+		$msg["captchaerror"] = "";
 
-		$this->register($data);
+		$this->register($msg);
 	}
 
 	public function register($data) {
@@ -35,14 +36,13 @@ class Register extends MY_Controller {
 
 		$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 
-		$data ["captchaerror"] = "";
+		$msg['error'] = "";
+		$msg["captchaerror"] = "";
 
 		if (!$resp->is_valid) {
-			$data["captchaerror"] = "The reCAPTCHA wasn't entered correctly. Go back and try it again.";
+			$msg["captchaerror"] = "The reCAPTCHA wasn't entered correctly. Go back and try it again.";
 		}
 		if ($this->form_validation->run () && $resp->is_valid) {
-			$data ["captchaerror"] = "";
-
 			$this->load->model('tempuser_model');
 
 			$this->load->library(
@@ -71,18 +71,18 @@ class Register extends MY_Controller {
 
 			if ($this->tempuser_model->add_user($key)) {
 				if ($this->email->send()) {
-					echo "E-mail saadetud!";
+					$msg['error'] = "E-mail saadetud!";
 				}
 				else {
-					echo "E-maili saatmine ebaõnnestus!";
+					$msg['error'] = "E-maili saatmine ebaõnnestus!";
 				}
 			}
 			else {
-				echo "Ei lisatud andmebaasi kasutajat";
+				$msg['error'] = "Ei lisatud andmebaasi kasutajat";
 			}
 			redirect('main');
 		}
-		$this->register($data);
+		$this->register($msg);
 	}
 
 	public function register_confirmation($key) {

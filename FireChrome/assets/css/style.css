@@ -37,12 +37,15 @@ body {
 /**
  * BUTTONS
  */
-#add-news-btn {
+#add-news-btn,
+#add-comment-btn {
 	text-decoration: none;
 	color: #000;
 	font-size: 20px;
+	float: left;
 }
-#add-news-btn:hover {
+#add-news-btn:hover,
+#add-comment-btn:hover {
 	color: #b0b0b0;
 }
 
@@ -107,6 +110,25 @@ body {
 		float: right;
 		margin-right: 80px;
 	}
+
+/**
+ * COMMENTS
+ */
+#comments {
+	float: left;
+}
+	#add-comment {
+		float: left;
+	}
+		#comment-content {
+			float: left;
+			display: block;
+			resize: none;
+		}
+		#comment-content:focus {
+			border: 1px solid #000;
+			background-color: #fafafa;
+		}
 
 /**
  * FOOTER

@@ -10,6 +10,7 @@ class News extends MY_Controller {
 
 		$this->load->view('header', $this->get_session_data());
 		$this->load->view('news', $this->news_model->get_news_by_id($id));
+		$this->load->view('comments', $this->get_session_data());
 		$this->load->view('footer');
 	}
 
@@ -164,7 +165,6 @@ class News extends MY_Controller {
 	 */
 	public function get_news($position, $limit, $category = null) {
 		$this->load->model('news_model');
-		header("Content-Type: text/html charset=UTF-8\r\n");
 
 		$results = $this->news_model->get_news($position, $limit, $category);
 		$session_data = $this->get_session_data();

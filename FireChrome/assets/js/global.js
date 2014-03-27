@@ -45,6 +45,21 @@ function loadNews(loadNewsCount, newsPerLoad) {
 	});
 }
 
+function addComment(content, newsId) {
+	var pathArray = window.location.pathname.split('/');
+	var newsId= pathArray[pathArray.length - 1];
+	var content = $('#comment-content').val();
+
+	$.ajax({
+		type: "GET",
+		url: 'http://localhost/FireChrome/FireChrome/comment/add_comment/' + content + '/' + newsId, //vaja ära muuta
+		dataType: 'html',
+		success: function(data) {
+			alert(data);
+		}
+	});
+}
+
 function startTime() {
 	var today = new Date();
 
