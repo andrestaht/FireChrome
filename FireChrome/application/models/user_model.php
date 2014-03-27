@@ -92,7 +92,7 @@ class User_model extends CI_Model {
 		return $query->result();
 	}
 
-	public function update_user_levels($updatedData) {
-		$this->db->update_batch($this->name,$updatedData,"id");
+	public function update_user_levels_by_ids($data) {
+ 		$this->db->update_batch($this->name, $data, "id");
 	}
 }
