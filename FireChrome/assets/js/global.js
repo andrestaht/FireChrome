@@ -73,7 +73,7 @@ function startTime() {
 	m = checkTime(m);
 	s = checkTime(s);
 
-	document.getElementById('current-time').innerHTML = h + ":" + m + ":" + s;
+	$('#current-time').html(h + ":" + m + ":" + s);
 
 	t = setTimeout(function() {
 		startTime()
