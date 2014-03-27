@@ -1,3 +1,5 @@
+var noMoreData = false;
+
 $(window).load(function() {
 	startTime();
 });
@@ -6,7 +8,6 @@ $(document).ready(function() {
 	$('#change-password-link').click(function() {
 		$('#change-password-form').slideDown();
 	});
-
 	var loadNewsCount = 0;
 	var newsPerLoad = 12;
 
@@ -21,13 +22,11 @@ $(document).ready(function() {
 	});
 });
 
-var noMoreData = false;
-
 function loadNews(loadNewsCount, newsPerLoad) {
 	if (noMoreData === false) {
 		$.ajax({
 			type: "GET",
-			url: 'http://localhost/FireChrome/FireChrome/news/get_news/' + loadNewsCount + '/' + newsPerLoad, //vaja ära muuta
+			url: getBaseURL() + 'news/get_news/' + loadNewsCount + '/' + newsPerLoad,
 			dataType: 'html',
 			beforeSend: function() {
 				$('.ajax-loader').show();
@@ -55,10 +54,11 @@ function addComment(content, newsId) {
 
 	$.ajax({
 		type: "GET",
-		url: 'http://localhost/FireChrome/FireChrome/comment/add_comment/' + content + '/' + newsId, //vaja ära muuta
+		url: getBaseURL() + 'comment/add_comment/' + content + '/' + newsId,
 		dataType: 'html',
 		success: function(data) {
 			alert(data);
+			$('#comment-content').val('');
 		}
 	});
 }
@@ -85,4 +85,22 @@ function checkTime(i) {
 		i = "0" + i;
 	}
 	return i;
+}
+
+function getBaseURL() {
+	var url = location.href;
+	var baseURL = url.substring(0, url.indexOf('/', 14));
+
+	if (baseURL.indexOf('http://localhost') != -1) {
+		var url = location.href;
+		var pathname = location.pathname;
+		var index1 = url.indexOf(pathname);
+		var index2 = url.indexOf("/", index1 + 1);
+		var baseLocalUrl = url.substr(0, index2);
+
+		return baseLocalUrl + "/";
+	}
+	else {
+		return baseURL + "/";
+	}
 }
