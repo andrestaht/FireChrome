@@ -6,13 +6,11 @@ class News extends MY_Controller {
 	 * Index Page for news controller.
 	 */
 	public function index($id) {
-
 		$this->load->model('news_model');
 
 		$this->load->view('header', $this->get_session_data());
-		
 		$this->load->view('news', $this->news_model->get_news_by_id($id));
-
+		$this->load->view('comments', $this->get_session_data());
 		$this->load->view('footer');
 	}
 
@@ -22,17 +20,16 @@ class News extends MY_Controller {
 	 * @param int $id
 	 */
 	public function add_news() {
-
 		$this->load->view('header', $this->get_session_data());
-	
+
 		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
 			$this->load->view('add_news');
 		}
 		else {
-			$data["logged_in"]= ( $this->session->userdata('is_logged_in'));
-			$this->load->view('no_access',$data);
+			$data["logged_in"] = ($this->session->userdata('is_logged_in'));
+
+			$this->load->view('no_access', $data);
 		}
-		
 		$this->load->view('footer');
 	}
 
@@ -86,18 +83,17 @@ class News extends MY_Controller {
 	 * @param int $id
 	 */
 	public function delete_news($id) {
-		
 		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
-			
 			$this->load->model('news_model');
 			$this->news_model->delete_news_by_id($id);
+
 			redirect('main');
-			
 		}
 		else {
 			$data["logged_in"]= ( $this->session->userdata('is_logged_in'));
-			$this->load->view('header',$this->get_session_data());
-			$this->load->view('no_access',$data);
+
+			$this->load->view('header', $this->get_session_data());
+			$this->load->view('no_access', $data);
 			$this->load->view('footer');
 		}
 	}
@@ -108,20 +104,17 @@ class News extends MY_Controller {
 	 * @param int $id
 	 */
 	public function modify_news($id) {
-		
 		$this->load->model('news_model');
 
 		$this->load->view('header', $this->get_session_data());
-		
+
 		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
 			$this->load->view('modify_news', $this->news_model->get_news_by_id($id));
 		}
 		else {
-			$data["logged_in"]= ( $this->session->userdata('is_logged_in') );
-			$this->load->view('no_access',$data);
+			$data["logged_in"] = ($this->session->userdata('is_logged_in'));
+			$this->load->view('no_access', $data);
 		}
-		
-
 		$this->load->view('footer');
 	}
 
@@ -130,28 +123,28 @@ class News extends MY_Controller {
 	 */
 	public function modify_news_validation($id) {
 		$this->load->library('form_validation');
-	
-		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|is_unique[news.title]|xss_clean');
+
+		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('content', 'Sisu', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('image', 'Pilt');
 		$this->form_validation->set_rules('isVisible', 'Avalik');
-	
+
 		if ($this->form_validation->run()) {
 			$this->load->model('news_model');
-	
+
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
-	
+
 			$this->load->library('upload', $config);
 			$this->upload->overwrite = true;
-	
+
 			if (!$this->upload->do_upload('image')) {
 				echo "Faili ei suudetud üles laadida!";
 			}
 			else {
 				$uploadData = $this->upload->data();
 				$uploadPath = preg_replace("/[^\w]+/", "", $config['upload_path']);
-	
+
 				$data = array(
 					'user_id' => $this->session->userdata('user_id'),
 					'title' => $this->input->post('title'),
@@ -165,6 +158,31 @@ class News extends MY_Controller {
 			}
 		}
 		$this->modify_news($id);
+	}
+
+	/**
+	 * Gets news for main page
+	 */
+	public function get_news($position, $limit, $category = null) {
+		$this->load->model('news_model');
+
+		$results = $this->news_model->get_news($position, $limit, $category);
+		$session_data = $this->get_session_data();
+
+		if (!empty($results)) {
+			foreach ($results as $result) {
+				if ($result->is_visible || $session_data['level'] > 1) {
+					echo '<div class="news"><a href="' . base_url() . 'news/index/' . $result->id . '">';
+					echo '<img src="' . $result->img_url . '" alt="' . $result->title . '" width="250" height="250" />';
+					echo '<h1 class="news-title">' . $result->title . '</h1></a>';
+
+					if ($result->is_visible) {
+						echo '<h1 class="news-is-invisible">Uudis pole nähtav</h1>';
+					}
+					echo '</div>';
+				}
+			}
+		}
 	}
 }
 

@@ -52,11 +52,29 @@ class News_model extends CI_Model {
 	 *
 	 * @return array $data
 	 */
-	public function get_all_visible_news() {
-		$this->db->where('is_visible', true);
-
+	public function get_all_news() {
 		$newsQuery = $this->db->get($this->name);
 
+		return $newsQuery->result();
+	}
+
+	/**
+	 * Gets news for home page
+	 *
+	 * @param int $postition
+	 * @param int limit
+	 * @param int $category
+	 * @return array $data
+	 */
+	public function get_news($position, $limit, $category) {
+		$this->db->order_by('id', 'desc');
+		$this->db->limit($limit, ($position * $limit));
+
+		if ($category != null) {
+			$this->db->where('category', $category);
+		}
+		$newsQuery = $this->db->get($this->name);
+	
 		return $newsQuery->result();
 	}
 

@@ -6,11 +6,10 @@ class Main extends MY_Controller {
 	 * Index page for main controller.
 	 */
 	public function index() {
-
 		$this->load->model('news_model');
 
 		$this->load->view('header', $this->get_session_data());
-		$this->load->view('home', array('news' => $this->news_model->get_all_visible_news()));
+		$this->load->view('home');
 		$this->load->view('footer');
 	}
 
@@ -18,7 +17,6 @@ class Main extends MY_Controller {
 	 * Settings page for main controller.
 	 */
 	public function settings() {
-
 		$this->load->view('header', $this->get_session_data());
 
 		if ($this->session->userdata('is_logged_in')) {
@@ -26,7 +24,8 @@ class Main extends MY_Controller {
 		}
 		else {
 			$data["logged_in"]= FALSE;
-			$this->load->view('no_access',$data);
+
+			$this->load->view('no_access', $data);
 		}
 		$this->load->view('footer');
 	}
