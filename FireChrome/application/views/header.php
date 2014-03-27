@@ -21,7 +21,6 @@
 				<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
 				<?php } ?>
 				<div id="current-time">
-					<span></span>
 				</div>
 			</div>
 			<div id="content">
