@@ -24,25 +24,28 @@ $(document).ready(function() {
 var noMoreData = false;
 
 function loadNews(loadNewsCount, newsPerLoad) {
-	$.ajax({
-		type: "GET",
-		url: 'http://localhost/FireChrome/FireChrome/news/get_news/' + loadNewsCount + '/' + newsPerLoad, //vaja ära muuta
-		dataType: 'html',
-		beforeSend: function() {
-			if (noMoreData == false) {
+	if (noMoreData === false) {
+		$.ajax({
+			type: "GET",
+			url: 'http://localhost/FireChrome/FireChrome/news/get_news/' + loadNewsCount + '/' + newsPerLoad, //vaja ära muuta
+			dataType: 'html',
+			beforeSend: function() {
 				$('.ajax-loader').show();
+			},
+			success: function(data) {
+				if (data) {
+					$('.ajax-loader').before(data);
+				}
+				else {
+					noMoreData = true;
+				}
 			}
-		},
-		success: function(data) {
-			if (data) {
-				$('.ajax-loader').before(data);
-				$('.ajax-loader').hide();
-			}
-			else {
-				noMoreData = true;
-			}
-		}
-	});
+		});
+		$('.ajax-loader').hide();
+	}
+	else {
+		$('.ajax-message').html('Kõik uudised on laetud');
+	}
 }
 
 function addComment(content, newsId) {

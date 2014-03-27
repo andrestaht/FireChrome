@@ -171,7 +171,7 @@ class News extends MY_Controller {
 
 		if (!empty($results)) {
 			foreach ($results as $result) {
-				if ($result->is_visible || $session_data['level'] > 1) {
+				if ($result->is_visible === true || $session_data['level'] > 1) {
 					echo '<div class="news"><a href="' . base_url() . 'news/index/' . $result->id . '">';
 					echo '<img src="' . $result->img_url . '" alt="' . $result->title . '" width="250" height="250" />';
 					echo '<h1 class="news-title">' . $result->title . '</h1></a>';

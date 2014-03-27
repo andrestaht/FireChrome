@@ -3,4 +3,5 @@
 <?php } ?>
 <div id="news-feed">
 	<div class="ajax-loader"></div>
+	<h1 class="ajax-message"></h1>
 </div>
