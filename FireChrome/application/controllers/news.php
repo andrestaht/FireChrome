@@ -25,7 +25,7 @@ class News extends MY_Controller {
 
 		$this->load->view('header', $this->get_session_data());
 	
-		if ($this->session->userdata('is_logged_in') && $this->user_has_access(5)) {
+		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
 			$this->load->view('add_news');
 		}
 		else {
@@ -87,7 +87,7 @@ class News extends MY_Controller {
 	 */
 	public function delete_news($id) {
 		
-		if ($this->session->userdata('is_logged_in') && $this->user_has_access(5)) {
+		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
 			
 			$this->load->model('news_model');
 			$this->news_model->delete_news_by_id($id);
@@ -113,7 +113,7 @@ class News extends MY_Controller {
 
 		$this->load->view('header', $this->get_session_data());
 		
-		if ($this->session->userdata('is_logged_in') && $this->user_has_access(5)) {
+		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
 			$this->load->view('modify_news', $this->news_model->get_news_by_id($id));
 		}
 		else {

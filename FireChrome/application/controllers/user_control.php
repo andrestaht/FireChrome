@@ -11,7 +11,7 @@ class User_control extends MY_Controller {
 		
 		$this->load->view('header', $this->get_session_data());
 		
-		if ($this->session->userdata('is_logged_in') && $this->user_has_access(5)) {
+		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->admin)) {
 			$this->load->view ( "user_control", $data );
 		}
 		else {
@@ -27,7 +27,7 @@ class User_control extends MY_Controller {
 		
 		$newArray = array ();
 		
-		foreach ( $_POST as $username => $level ) {
+		foreach ( $this->input->post() as $username => $level ) {
 			$newArray [] = array (
 					'username' => $username,
 					'level' => $level 
@@ -46,6 +46,10 @@ class User_control extends MY_Controller {
 		$this->load->view ( "user_control", $data );
 		$this->load->view ( "footer");
 	}
+// 	public function delete_user($username){
+// 		$this->load->model("user_model");
+		
+// 	}
 }
 
 /* End of file user_control.php */

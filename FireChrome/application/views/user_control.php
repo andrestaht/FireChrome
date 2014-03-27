@@ -20,21 +20,21 @@
 		echo "<td>" . $row->username . "</td>";
 		echo "<td>" . $row->email . "</td>";
 		
-		echo "<td><input type='radio' name='" . $row->username . "' value=1";
+		echo "<td><input type='radio' name='" . $row->id . "' value=1";
 		if ($row->level == 1) {
 			echo " checked>1";
 		} else {
 			echo " >1";
 		}
 		
-		echo "<input type='radio' name='" . $row->username . "' value=5";
+		echo "<input type='radio' name='" . $row->id . "' value=5";
 		if ($row->level == 5) {
 			echo " checked>5";
 		} else {
 			echo ">5";
 		}
 		
-		echo "<input type='radio' name='" . $row->username . "' value=10";
+		echo "<input type='radio' name='" . $row->id . "' value=10";
 		if ($row->level == 10) {
 			echo " checked>10</td>";
 		} else {

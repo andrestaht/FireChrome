@@ -2,6 +2,9 @@
 
 class MY_Controller extends CI_Controller {
 	private $sessionData = array();
+	protected $user=1;
+	protected $editor=5;
+	protected $admin=10;
 
 	function __construct() {
 		parent::__construct();
