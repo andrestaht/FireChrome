@@ -10,3 +10,5 @@ FireChrome/application/config/database.php
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
+.buildpath
+.settings/org.eclipse.wst.common.project.facet.core.xml

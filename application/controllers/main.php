@@ -23,9 +23,7 @@ class Main extends MY_Controller {
 			$this->load->view('settings');
 		}
 		else {
-			$data["logged_in"]= FALSE;
-
-			$this->load->view('no_access', $data);
+			$this->load->view('no_access');
 		}
 		$this->load->view('footer');
 	}

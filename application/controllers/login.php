@@ -17,6 +17,8 @@ class Login extends MY_Controller {
 	 * Login Page login function.
 	 */
 	public function login() {
+		$this->session->set_userdata('url_before_login', $_SERVER['HTTP_REFERER']);
+
 		$this->load->view('header');
 		$this->load->view('login');
 		$this->load->view('footer');
@@ -45,7 +47,10 @@ class Login extends MY_Controller {
 			);
 			$this->session->set_userdata($data);
 
-			redirect('main', 'refresh');
+			$url = $this->session->userdata('url_before_login');
+			$this->session->unset_userdata('url_before_login');
+
+			redirect($url);
 		}
 		$this->login();
 	}

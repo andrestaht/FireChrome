@@ -17,7 +17,7 @@ echo form_upload('image');
 echo "</p>";
 
 echo "<p>Avalik: ";
-echo form_checkbox('isVisible', $isVisible);
+echo form_checkbox('isVisible', 'isVisible', !empty($isVisible) ? true : false);
 echo "</p>";
 
 echo "<p>";
