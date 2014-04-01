@@ -26,9 +26,7 @@ class News extends MY_Controller {
 			$this->load->view('add_news');
 		}
 		else {
-			$data["logged_in"] = ($this->session->userdata('is_logged_in'));
-
-			$this->load->view('no_access', $data);
+			$this->load->view('no_access');
 		}
 		$this->load->view('footer');
 	}
@@ -49,9 +47,9 @@ class News extends MY_Controller {
 
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
+			$config['overwrite'] = true;
 
 			$this->load->library('upload', $config);
-			$this->upload->overwrite = true;
 
 			if (!$this->upload->do_upload('image')) {
 				echo "Faili ei suudetud üles laadida!";
@@ -90,10 +88,8 @@ class News extends MY_Controller {
 			redirect('main');
 		}
 		else {
-			$data["logged_in"]= ( $this->session->userdata('is_logged_in'));
-
 			$this->load->view('header', $this->get_session_data());
-			$this->load->view('no_access', $data);
+			$this->load->view('no_access');
 			$this->load->view('footer');
 		}
 	}
@@ -112,8 +108,7 @@ class News extends MY_Controller {
 			$this->load->view('modify_news', $this->news_model->get_news_by_id($id));
 		}
 		else {
-			$data["logged_in"] = ($this->session->userdata('is_logged_in'));
-			$this->load->view('no_access', $data);
+			$this->load->view('no_access');
 		}
 		$this->load->view('footer');
 	}
@@ -134,9 +129,9 @@ class News extends MY_Controller {
 
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
+			$config['overwrite'] = true;
 
 			$this->load->library('upload', $config);
-			$this->upload->overwrite = true;
 
 			if (!$this->upload->do_upload('image')) {
 				echo "Faili ei suudetud üles laadida!";
@@ -171,12 +166,12 @@ class News extends MY_Controller {
 
 		if (!empty($results)) {
 			foreach ($results as $result) {
-				if ($result->is_visible === true || $session_data['level'] > 1) {
+				if (!empty($result->is_visible) || $session_data['level'] > 1) {
 					echo '<div class="news"><a href="' . base_url() . 'news/index/' . $result->id . '">';
 					echo '<img src="' . $result->img_url . '" alt="' . $result->title . '" width="250" height="250" />';
 					echo '<h1 class="news-title">' . $result->title . '</h1></a>';
 
-					if ($result->is_visible) {
+					if (empty($result->is_visible)) {
 						echo '<h1 class="news-is-invisible">Uudis pole nähtav</h1>';
 					}
 					echo '</div>';

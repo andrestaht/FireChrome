@@ -16,9 +16,7 @@ class User_control extends MY_Controller {
 			$this->load->view("user_control", $data);
 		}
 		else {
-			$data["logged_in"]= ($this->session->userdata('is_logged_in'));
-
-			$this->load->view('no_access', $data);
+			$this->load->view('no_access');
 		}
 		$this->load->view("footer");
 	}
