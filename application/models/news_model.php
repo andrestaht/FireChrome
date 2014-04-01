@@ -26,24 +26,22 @@ class News_model extends CI_Model {
 	 * @return array $data
 	 */
 	public function get_news_by_id($id) {
-		$this->db->where('id', $id);
+		$this->db->select('*');
+		$this->db->from($this->name);
+		$this->db->join('user', 'user.id = ' . $this->name . '.user_id');
+		$this->db->where($this->name . '.id', $id);
 
-		$newsQuery = $this->db->get($this->name);
-		$newsData = $newsQuery->row();
-
-		$this->db->where('id', $newsData->user_id);
-
-		$usersQuery = $this->db->get('user');
-		$userData = $usersQuery->row();
+		$query = $this->db->get();
+		$data = $query->row();
 
 		return array(
 			'id' => $id,
-			'title' => $newsData->title,
-			'author' => $userData->username,
-			'date' => $newsData->date,
-			'content' => $newsData->content,
-			'imgUrl' => $newsData->img_url,
-			'isVisible' => $newsData->is_visible,
+			'title' => $data->title,
+			'author' => $data->username,
+			'date' => $data->date,
+			'content' => $data->content,
+			'imgUrl' => $data->img_url,
+			'isVisible' => $data->is_visible,
 		);
 	}
 
