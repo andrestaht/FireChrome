@@ -44,11 +44,14 @@ class User_control extends MY_Controller {
 		$this->load->view("user_control", $data);
 		$this->load->view("footer");
 	}
-
-// 	public function delete_user($username){
-// 		$this->load->model("user_model");
+	
+	public function delete_user($id) {
+		$this->load->model("user_model");
 		
-// 	}
+		$this->user_model->delete_user_by_id($id);
+		
+		redirect('user_control', 'refresh');
+	}
 }
 
 /* End of file user_control.php */

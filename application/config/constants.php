@@ -37,5 +37,10 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
+//Recaptcha keys
+define("Recaptcha_public", "6Lcaz-8SAAAAAMzviTKe6kjuSma7nU7SYjin91rJ");
+define("Recaptcha_private", "6Lcaz-8SAAAAADvOBApdQbLtAhIcb2_RBTSw2HDC");
+
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

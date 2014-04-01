@@ -95,4 +95,8 @@ class User_model extends CI_Model {
 	public function update_user_levels_by_ids($data) {
  		$this->db->update_batch($this->name, $data, "id");
 	}
+	
+	public function delete_user_by_id($id){
+		$this->db->delete($this->name, array('id'=>$id));
+	}
 }

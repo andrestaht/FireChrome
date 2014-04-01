@@ -41,7 +41,7 @@
 						echo ">10</td>";
 					}
 
-					echo "<td><button type='button' class='delete-user-btn' value='" . $row->username . "'>Kustuta</button></td>";
+					echo "<td><a class='delete-user-btn' href='" . base_url()."user_control/delete_user/" . $row->id . "'>Kustuta</a></td>";
 					echo "</tr>";
 				}
 			?>

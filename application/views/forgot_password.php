@@ -8,7 +8,7 @@
 	echo "</p>";
 	
 	require_once(APPPATH.'libraries/recaptcha-php-1.11/recaptchalib.php');
-	$publickey = "6Lcaz-8SAAAAAMzviTKe6kjuSma7nU7SYjin91rJ"; // you got this from the signup page
+	$publickey = Recaptcha_public; // you got this from the signup page
 	echo recaptcha_get_html($publickey);
 
 	echo "<p>";

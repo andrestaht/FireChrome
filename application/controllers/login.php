@@ -77,7 +77,7 @@ class Login extends MY_Controller {
 
 		require_once (APPPATH . 'libraries/recaptcha-php-1.11/recaptchalib.php');
 
-		$privatekey = "6Lcaz-8SAAAAADvOBApdQbLtAhIcb2_RBTSw2HDC";
+		$privatekey = Recaptcha_private;
 
 		$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 

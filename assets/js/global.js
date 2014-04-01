@@ -20,6 +20,13 @@ $(document).ready(function() {
 			loadNewsCount++;
 		}
 	});
+//	$(".login_button").click(function(e) {
+//		e.preventDefault();
+//		$(".popup").fadeToggle("fast");
+//		$("#close_login_popup").click(function() { 
+//		$(".popup, .overlay").hide(); 
+//		}); 
+//	});
 });
 
 function loadNews(loadNewsCount, newsPerLoad) {
