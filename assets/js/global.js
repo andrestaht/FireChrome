@@ -65,9 +65,9 @@ function addComment() {
 				dataType: 'html',
 				success: function(data) {
 					$('#comment-content').val('');
-			alert("Kommentaar lisatud.");
-			updateComments(newsId);
-					}
+					alert(data);
+					updateComments(newsId);
+				}
 			});
 		}
 		else {

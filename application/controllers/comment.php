@@ -31,10 +31,13 @@ class Comment extends MY_Controller {
 				'news_id' => $news_id,
 				'content' => $content,
 			);
-		$this->comment_model->insert($comment_data);
-		
+			$this->comment_model->insert($comment_data);
+			echo "Kommentaar lisatud.";
+		}else{
+			echo "Captcha vale.";
+		}
 	}
-	}
+	
 	public function load_comments($id){
 		$this->load->model('comment_model');
 		$comments=$this->comment_model->get_comments_for_news_by_id($id);
