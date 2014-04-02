@@ -97,6 +97,6 @@ class User_model extends CI_Model {
 	}
 	
 	public function delete_user_by_id($id){
-		$this->db->delete($this->name, array('id'=>$id));
+		$this->db->delete($this->name, array('id'=>$id));		
 	}
 }

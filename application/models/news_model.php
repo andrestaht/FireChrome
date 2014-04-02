@@ -98,4 +98,14 @@ class News_model extends CI_Model {
 
 		return true;
 	}
+	
+	public function get_author($id){
+		$this->db->select("username");
+		$this->db->from($this->name);
+		$this->db->join('user', 'user.id = ' . $this->name . '.user_id');
+		$this->db->where("news.id", $id);
+		$query = $this->db->get();
+	
+		return $query->row();
+	}
 }

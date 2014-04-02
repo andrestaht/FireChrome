@@ -16,27 +16,36 @@ class Comment extends MY_Controller {
 
 	public function add_comment($content, $news_id) {
 		$this->load->model('comment_model');
-		$this->load->model('news_to_comment_model');
+		$this->load->model('news_model');
+		$this->load->helper("date");
 
 		$session_data = $this->get_session_data();
 
 		$comment_data = array(
 			'user_id' => $session_data['user_id'],
+			'news_id' => $news_id,
 			'content' => $content,
 		);
-		$comment_id = $this->comment_model->insert($comment_data);
-
-		$news_to_comment_data = array(
-			'news_id' => $news_id,
-			'comment_id' => $comment_id,
-		);
-		$news_to_comment_id = $this->news_to_comment_model->insert($news_to_comment_data);
-
-		if (!empty($news_to_comment_id)) {
-			echo "Kommentaar lisatud!";
-		}
-		else {
-			echo "Kommentaari ei lisatud!";
-		}
+		$this->comment_model->insert($comment_data);
+		
+	}
+	public function load_comments($id){
+		$this->load->model('comment_model');
+		$comments=$this->comment_model->get_comments_for_news_by_id($id);
+		foreach ($comments as $comment){
+			echo "<div class='comment'>";
+			echo "<h1 class='comment-author'>Autor: ". $comment->username . " - " . $comment->date . "</h1>";
+			echo "<p class='comment-content'>" . $comment->content . "</p>";
+			if ($this->user_has_access(5)){
+				echo "<a class='delete-comment-btn' href='javascript:void(0);' onclick='deleteComment(". $comment->id .", this)'>Kustuta</a>";}
+			echo "</div>";}
+	}
+	
+	public function delete_comment($id){
+		$this->load->model('comment_model');
+		
+		$this->comment_model->delete_comment_by_id($id);
+		
+		echo "kommentaar kustutatud";
 	}
 }

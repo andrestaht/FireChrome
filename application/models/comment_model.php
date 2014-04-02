@@ -18,4 +18,20 @@ class Comment_model extends CI_Model {
 
 		return $this->db->insert_id();
 	}
+	
+	public function get_comments_for_news_by_id($id){
+		$this->db->select("comment.id,date,content,username");
+		$this->db->from($this->name);
+		$this->db->where('news_id',$id);
+		$this->db->join('user', 'user.id = ' . $this->name . '.user_id');
+		$this->db->order_by('date','asc');
+		$query = $this->db->get();
+		
+		return $query->result();
+		
+	}
+	
+	public function delete_comment_by_id($id){
+		$this->db->delete($this->name,array('id' => $id));
+	}
 }

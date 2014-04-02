@@ -8,6 +8,12 @@
 		<?php } ?>
 	</div>
 	<div id="comments-feed">
-		<div class="comment"></div>
+	<?php foreach ($comments as $comment){
+		echo "<div class='comment'>";
+			echo "<h1 class='comment-author'>Autor: ". $comment->username . " - " . $comment->date . "</h1>";
+			echo "<p class='comment-content'>" . $comment->content . "</p>";
+			if ($level > 1){
+				echo "<a class='delete-comment-btn' href='javascript:void(0);' onclick='deleteComment(". $comment->id .", this)'>Kustuta</a>";}
+		echo "</div>";} ?>
 	</div>
 </div>

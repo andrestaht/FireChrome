@@ -7,10 +7,14 @@ class News extends MY_Controller {
 	 */
 	public function index($id) {
 		$this->load->model('news_model');
+		$this->load->model('comment_model');
 
 		$this->load->view('header', $this->get_session_data());
 		$this->load->view('news', $this->news_model->get_news_by_id($id));
-		$this->load->view('comments', $this->get_session_data());
+		
+		$data["comments"] = $this->comment_model->get_comments_for_news_by_id($id);
+		$this->load->view('comments', array_merge($this->get_session_data(), $data));
+		
 		$this->load->view('footer');
 	}
 

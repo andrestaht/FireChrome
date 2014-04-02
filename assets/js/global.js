@@ -20,13 +20,6 @@ $(document).ready(function() {
 			loadNewsCount++;
 		}
 	});
-//	$(".login_button").click(function(e) {
-//		e.preventDefault();
-//		$(".popup").fadeToggle("fast");
-//		$("#close_login_popup").click(function() { 
-//		$(".popup, .overlay").hide(); 
-//		}); 
-//	});
 });
 
 function loadNews(loadNewsCount, newsPerLoad) {
@@ -64,8 +57,35 @@ function addComment(content, newsId) {
 		url: getBaseURL() + 'comment/add_comment/' + content + '/' + newsId,
 		dataType: 'html',
 		success: function(data) {
-			alert(data);
 			$('#comment-content').val('');
+			alert("Kommentaar lisatud.");
+			updateComments(newsId);
+		}
+	});
+}
+
+function updateComments(newsId){
+	$.ajax({
+		type: "GET",
+		url: getBaseURL() + 'comment/load_comments/' + newsId,
+		dataType: 'html',
+		success: function(data) {
+			$("#comments-feed").html(data);
+		}
+	})
+}
+
+function deleteComment(Id,Caller){
+	var pathArray = window.location.pathname.split('/');
+	var newsId= pathArray[pathArray.length - 1];
+	
+	$.ajax({
+		type: "GET",
+		url: getBaseURL() + 'comment/delete_comment/' + Id,
+		dataType: 'html',
+		success: function(data) {
+			alert(data);
+			$(Caller).closest(".comment").hide();
 		}
 	});
 }
