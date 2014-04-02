@@ -50,7 +50,7 @@ class Login extends MY_Controller {
 			$url = $this->session->userdata('url_before_login');
 			$this->session->unset_userdata('url_before_login');
 
-			redirect($url);
+			redirect($url, 'refresh');
 		}
 		$this->login();
 	}
@@ -73,6 +73,8 @@ class Login extends MY_Controller {
 	}
 
 	public function reset_password() {
+		require_once(APPPATH . 'libraries/Recaptchalib.php');
+
 		$password = substr(hash('sha512', rand()), 0, 12);
 		$email = $this->input->post('email');
 
@@ -80,19 +82,14 @@ class Login extends MY_Controller {
 
 		$this->form_validation->set_rules('email', 'E-mail', 'required|trim|valid_email|xss_clean');
 
-		require_once (APPPATH . 'libraries/recaptcha-php-1.11/recaptchalib.php');
+		$response = recaptcha_check_answer(RECAPTCHA_PRIVATE_KEY, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 
-		$privatekey = Recaptcha_private;
+		$data["captchaerror"] = "";
 
-		$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
-
-		$data ["captchaerror"] = "";
-
-		if (!$resp->is_valid) {
+		if (!$response->is_valid) {
 			$data["captchaerror"] = "The reCAPTCHA wasn't entered correctly. Go back and try it again.";
 		}
-
-		if ($this->form_validation->run() && $resp->is_valid) {
+		if ($this->form_validation->run() && $response->is_valid) {
 			$this->load->model('user_model');
 			$this->load->library('email', array('mailtype' => 'html'));
 

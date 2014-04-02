@@ -5,6 +5,9 @@ $(window).load(function() {
 });
 
 $(document).ready(function() {
+	$('body').removeClass('no-js');
+	$('body').addClass('js');
+
 	$('#change-password-link').click(function() {
 		$('#change-password-form').slideDown();
 	});
@@ -47,17 +50,21 @@ function loadNews(loadNewsCount, newsPerLoad) {
 	}
 }
 
-function addComment(content, newsId) {
+function addComment() {
 	var pathArray = window.location.pathname.split('/');
 	var newsId= pathArray[pathArray.length - 1];
 	var content = $('#comment-content').val();
+	var captchaChallengeField = $('#recaptcha_challenge_field').val();
+	var captchaResponseField = $('#recaptcha_response_field').val();
 
-	$.ajax({
-		type: "GET",
-		url: getBaseURL() + 'comment/add_comment/' + content + '/' + newsId,
-		dataType: 'html',
-		success: function(data) {
-			$('#comment-content').val('');
+	if (content.replace(/\s/g, '') != '') {
+		if (captchaResponseField.replace(/\s/g, '') != '') {
+			$.ajax({
+				type: "GET",
+				url: getBaseURL() + 'comment/add_comment/' + content + '/' + newsId + '/' + captchaChallengeField + '/' + captchaResponseField,
+				dataType: 'html',
+				success: function(data) {
+					$('#comment-content').val('');
 			alert("Kommentaar lisatud.");
 			updateComments(newsId);
 		}
@@ -86,8 +93,16 @@ function deleteComment(Id,Caller){
 		success: function(data) {
 			alert(data);
 			$(Caller).closest(".comment").hide();
+				}
+			});
 		}
-	});
+		else {
+			alert("Captcha ei saa olla tühi!");
+		}
+	}
+	else {
+		alert("Kommentaar ei saa olla tühi!");
+	}
 }
 
 function startTime() {

@@ -8,7 +8,7 @@
 		<script src="<?php echo base_url() . "assets/js/jquery.min.js" ?>" type="text/javascript" ></script>
 		<script src="<?php echo base_url() . "assets/js/global.js" ?>" type="text/javascript" ></script>
 	</head>
-	<body>
+	<body class="no-js">
 		<div id="wrap">
 			<div id="header">
 				<a href="<?php echo base_url() ?>"><span id="logo"></span></a>

@@ -12,3 +12,4 @@ FireChrome/application/config/database.php
 */cache/!.htaccess
 .buildpath
 .settings/org.eclipse.wst.common.project.facet.core.xml
+.settings/org.eclipse.php.core.prefs

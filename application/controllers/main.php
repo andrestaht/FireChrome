@@ -6,8 +6,6 @@ class Main extends MY_Controller {
 	 * Index page for main controller.
 	 */
 	public function index() {
-		$this->load->model('news_model');
-
 		$this->load->view('header', $this->get_session_data());
 		$this->load->view('home');
 		$this->load->view('footer');

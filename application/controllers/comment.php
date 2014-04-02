@@ -14,18 +14,23 @@ class Comment extends MY_Controller {
 		$this->load->view('footer');
 	}
 
-	public function add_comment($content, $news_id) {
+	public function add_comment($content, $news_id, $recaptcha_challenge_field, $recaptcha_response_field) {
+		require_once(APPPATH . 'libraries/Recaptchalib.php');
+
 		$this->load->model('comment_model');
 		$this->load->model('news_model');
 		$this->load->helper("date");
 
-		$session_data = $this->get_session_data();
+		$response = recaptcha_check_answer(RECAPTCHA_PRIVATE_KEY, $_SERVER["REMOTE_ADDR"], $recaptcha_challenge_field, $recaptcha_response_field);
 
-		$comment_data = array(
-			'user_id' => $session_data['user_id'],
-			'news_id' => $news_id,
+		if ($response->is_valid) {
+			$session_data = $this->get_session_data();
+	
+			$comment_data = array(
+				'user_id' => $session_data['user_id'],
+				'news_id' => $news_id,
 			'content' => $content,
-		);
+			);
 		$this->comment_model->insert($comment_data);
 		
 	}

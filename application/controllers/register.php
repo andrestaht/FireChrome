@@ -23,6 +23,8 @@ class Register extends MY_Controller {
 	}
 
 	public function register_validation() {
+		require_once(APPPATH . 'libraries/Recaptchalib.php');
+
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('username', 'Kasutajanimi', 'required|trim|is_unique[user.username]|xss_clean');
@@ -30,19 +32,15 @@ class Register extends MY_Controller {
 		$this->form_validation->set_rules('password', 'Parool', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('cpassword', 'Parool uuesti', 'required|trim|matches[password]|xss_clean');
 
-		require_once (APPPATH . 'libraries/recaptcha-php-1.11/recaptchalib.php');
-
-		$privatekey = Recaptcha_private;
-
-		$resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+		$response = recaptcha_check_answer(RECAPTCHA_PRIVATE_KEY, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
 
 		$msg['error'] = "";
 		$msg["captchaerror"] = "";
 
-		if (!$resp->is_valid) {
+		if (!$response->is_valid) {
 			$msg["captchaerror"] = "The reCAPTCHA wasn't entered correctly. Go back and try it again.";
 		}
-		if ($this->form_validation->run () && $resp->is_valid) {
+		if ($this->form_validation->run () && $response->is_valid) {
 			$this->load->model('tempuser_model');
 
 			$this->load->library(
