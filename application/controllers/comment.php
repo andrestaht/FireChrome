@@ -29,10 +29,11 @@ class Comment extends MY_Controller {
 			$comment_data = array(
 				'user_id' => $session_data['user_id'],
 				'news_id' => $news_id,
-			'content' => $content,
+				'content' => $content,
 			);
 		$this->comment_model->insert($comment_data);
 		
+	}
 	}
 	public function load_comments($id){
 		$this->load->model('comment_model');

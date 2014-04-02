@@ -67,9 +67,18 @@ function addComment() {
 					$('#comment-content').val('');
 			alert("Kommentaar lisatud.");
 			updateComments(newsId);
+					}
+			});
 		}
-	});
+		else {
+			alert("Captcha ei saa olla tühi!");
+		}
+	}
+	else {
+		alert("Kommentaar ei saa olla tühi!");
+	}
 }
+
 
 function updateComments(newsId){
 	$.ajax({
@@ -93,17 +102,10 @@ function deleteComment(Id,Caller){
 		success: function(data) {
 			alert(data);
 			$(Caller).closest(".comment").hide();
-				}
-			});
 		}
-		else {
-			alert("Captcha ei saa olla tühi!");
-		}
-	}
-	else {
-		alert("Kommentaar ei saa olla tühi!");
-	}
+	});
 }
+
 
 function startTime() {
 	var today = new Date();
