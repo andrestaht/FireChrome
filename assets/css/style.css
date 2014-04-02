@@ -153,26 +153,6 @@ body {
 /**
  * FORMS
  */
-#change-password-form {
+.js #change-password-form {
 	display: none;
-}
-
-/**
-*popups
-*/
-.popup {
-	padding: 10px 10px 35px;
-	background: #fff;
-	z-index: 999;
-	display: none;
-	position: absolute;
-	right: 0;
-}
-.overlay {
-	padding: 10px 10px 35px;
-	background: #fff;
-	z-index: 999;
-	display: none;
-	position: absolute;
-	right: 0;
 }

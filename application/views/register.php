@@ -1,4 +1,6 @@
 <?php
+	require_once(APPPATH . 'libraries/Recaptchalib.php');
+
 	echo validation_errors();
 	echo $captchaerror;
 
@@ -19,10 +21,8 @@
 	echo "<p>Parool uuesti: ";
 	echo form_password('cpassword');
 	echo "</p>";
-	
-	require_once(APPPATH.'libraries/recaptcha-php-1.11/recaptchalib.php');
-	$publickey = Recaptcha_public; // you got this from the signup page
-	echo recaptcha_get_html($publickey);
+
+	echo recaptcha_get_html(RECAPTCHA_PUBLIC_KEY);
 
 	echo "<p>";
 	echo form_submit('register-submit-btn', 'Registreeri');

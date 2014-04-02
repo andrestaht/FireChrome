@@ -5,6 +5,9 @@ $(window).load(function() {
 });
 
 $(document).ready(function() {
+	$('body').removeClass('no-js');
+	$('body').addClass('js');
+
 	$('#change-password-link').click(function() {
 		$('#change-password-form').slideDown();
 	});
@@ -20,13 +23,6 @@ $(document).ready(function() {
 			loadNewsCount++;
 		}
 	});
-//	$(".login_button").click(function(e) {
-//		e.preventDefault();
-//		$(".popup").fadeToggle("fast");
-//		$("#close_login_popup").click(function() { 
-//		$(".popup, .overlay").hide(); 
-//		}); 
-//	});
 });
 
 function loadNews(loadNewsCount, newsPerLoad) {
@@ -54,20 +50,32 @@ function loadNews(loadNewsCount, newsPerLoad) {
 	}
 }
 
-function addComment(content, newsId) {
+function addComment() {
 	var pathArray = window.location.pathname.split('/');
 	var newsId= pathArray[pathArray.length - 1];
 	var content = $('#comment-content').val();
+	var captchaChallengeField = $('#recaptcha_challenge_field').val();
+	var captchaResponseField = $('#recaptcha_response_field').val();
 
-	$.ajax({
-		type: "GET",
-		url: getBaseURL() + 'comment/add_comment/' + content + '/' + newsId,
-		dataType: 'html',
-		success: function(data) {
-			alert(data);
-			$('#comment-content').val('');
+	if (content.replace(/\s/g, '') != '') {
+		if (captchaResponseField.replace(/\s/g, '') != '') {
+			$.ajax({
+				type: "GET",
+				url: getBaseURL() + 'comment/add_comment/' + content + '/' + newsId + '/' + captchaChallengeField + '/' + captchaResponseField,
+				dataType: 'html',
+				success: function(data) {
+					alert(data);
+					$('#comment-content').val('');
+				}
+			});
 		}
-	});
+		else {
+			alert("Captcha ei saa olla tühi!");
+		}
+	}
+	else {
+		alert("Kommentaar ei saa olla tühi!");
+	}
 }
 
 function startTime() {

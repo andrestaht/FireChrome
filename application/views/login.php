@@ -1,10 +1,6 @@
-
-<div id="login_popup" >
 	<?php
 		echo validation_errors();
 		
-		echo "<a href='javascript:void(0)' id='close_login_popup'>X</a>";
-	
 		echo form_open('login/login_validation', array('id' => 'login-form'));
 	
 		echo "<p>E-mail: ";
@@ -24,4 +20,3 @@
 	
 		echo form_close();
 	?>
-	</div>
