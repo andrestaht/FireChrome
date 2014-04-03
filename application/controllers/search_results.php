@@ -3,7 +3,6 @@
 class Search_results extends MY_Controller {
     
     public function index() {
-        $this->session->set_userdata('url_before_login', $_SERVER['HTTP_REFERER']);
         
         $this->load->view('header', $this->get_session_data());
         

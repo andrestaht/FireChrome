@@ -28,8 +28,10 @@
                     <?php
                         $form_entry = array('entry' => 's_entry');   
                         echo form_open('search_results');
+                        echo "<div>";
                         echo form_input('s_result', $this->input->post('s_result'));
                         echo form_submit('search_results', 'Otsi!');
+                        echo "</div>";
                         echo form_close();
                     ?>
                 </div>
