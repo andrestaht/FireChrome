@@ -56,8 +56,22 @@ class Main extends MY_Controller {
 	 * Logout function
 	 */
 	public function logout() {
-		$this->session->sess_destroy();
-		redirect('main', 'refresh');
+        if (empty($is_facebook_account)) {
+            $this->session->sess_destroy();
+            redirect('main', 'refresh');
+        } else {
+		  parse_str( $_SERVER['QUERY_STRING'], $_REQUEST );
+		  $CI = & get_instance();
+		  require_once( 'application/libraries/Facebook.php');
+		  $CI->config->load("facebook",TRUE);
+       	    $config = $CI->config->item('facebook');
+            $this->load->library('Facebook', $config);
+		  $args['next'] = base_url();
+		  $logoutUrl = $this->facebook->getLogoutUrl($args);
+		  $this->facebook->destroySession();		
+		  $this->session->sess_destroy();
+		  redirect($logoutUrl);	
+        }
 	}
 }
 

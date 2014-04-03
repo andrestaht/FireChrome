@@ -17,10 +17,22 @@
 				<a id="register" href="<?php echo base_url() . "register" ?>">Registreeri</a>
 				<?php } else { ?>
 				<h1>Tere <?php echo $username; ?>!</h1>
-				<a id="settings" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
+                    <?php if (empty($is_facebook_account)) { ?>
+				    <a id="settings" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
+                    <?php } ?>                
 				<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
 				<?php } ?>
 				<div id="current-time">
 				</div>
+                <div id="search-form">
+                    <?php
+                        $form_entry = array('entry' => 's_entry');   
+                        echo form_open('search_results');
+                        echo form_input('s_result', $this->input->post('s_result'));
+                        echo form_submit('search_results', 'Otsi!');
+                        echo form_close();
+                    ?>
+                </div>
 			</div>
+            
 			<div id="content">

@@ -4,6 +4,11 @@ class Login extends MY_Controller {
 
 	function __construct() {
 		parent::__construct();
+		parse_str( $_SERVER['QUERY_STRING'], $_REQUEST );
+		$CI = & get_instance();
+        $CI->config->load("facebook",TRUE);
+        $config = $CI->config->item('facebook');
+        $this->load->library('Facebook', $config);
 	}
 
 	/**
@@ -24,6 +29,33 @@ class Login extends MY_Controller {
 		$this->load->view('footer');
 	}
 
+	/**
+	*Login function for Facebook.
+	*/
+    public function facebook_login() {
+		$userId = $this->facebook->getUser();
+
+		if ($userId == 0) {
+			redirect($this->facebook->getLoginUrl(array('scope'=>'email')));
+		} else {
+			$user = $this->facebook->api('/me');
+            $userdata = array(
+                'user_id' => $user['id'],
+                'username' => $user['name'],
+                'email' => $user['email'],
+                'is_logged_in' => 1,
+                'level' => 1,
+                'is_facebook_account' => 1,
+            );
+            $this->session->set_userdata($userdata);
+			
+			$url = $this->session->userdata('url_before_login');
+			$this->session->unset_userdata('url_before_login');
+
+			redirect($url, 'refresh');
+		}
+    }
+	
 	/**
 	 * Login Page login validation function.
 	 */
