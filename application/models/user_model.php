@@ -82,7 +82,7 @@ class User_model extends CI_Model {
 	}
 
 	public function get_all_users() {
-		$this->db->select("id,username, email, level");
+		$this->db->select("id,username, email, level, facebook_id");
 
 		$this->db->order_by('level', 'desc');
 		$this->db->order_by('username', 'asc');
