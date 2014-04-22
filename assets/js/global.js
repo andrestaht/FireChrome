@@ -13,23 +13,44 @@ $(document).ready(function() {
 	});
 	var loadNewsCount = 0;
 	var newsPerLoad = 12;
+	var categoryId;
 
-	loadNews(loadNewsCount, newsPerLoad);
+	var categoryIdFromUrl = window.location.pathname.match(/main\/index\/(\d+)/);
+	var currentUrl = window.location.protocol + "//" + window.location.host + "" + window.location.pathname;
+
+	if (categoryIdFromUrl != null) {
+		categoryId = categoryIdFromUrl[1];
+	}
+	else if (getBaseURL() == currentUrl) {
+		categoryId = 1;
+	}
+	loadNews(loadNewsCount, newsPerLoad, categoryId);
 	loadNewsCount++;
 
 	$(window).scroll(function() {
 		if($(window).scrollTop() + $(window).height() == $(document).height()) {
-			loadNews(loadNewsCount, newsPerLoad);
+			loadNews(loadNewsCount, newsPerLoad, categoryId);
 			loadNewsCount++;
 		}
 	});
+
+	$('#menu-item-' + categoryId).parent().addClass('active');
+
+	$('.menu-item a').click(function() {
+		$('.menu-item.active').removeClass('active');
+		$(this).parent().addClass('active');
+	});
+
+	$('.back-to-top').click(function (e) {
+		$('html, body').animate({scrollTop: '0px'}, 300);
+	});
 });
 
-function loadNews(loadNewsCount, newsPerLoad) {
+function loadNews(loadNewsCount, newsPerLoad, categoryId) {
 	if (noMoreData === false) {
 		$.ajax({
 			type: "GET",
-			url: getBaseURL() + 'news/get_news/' + loadNewsCount + '/' + newsPerLoad,
+			url: getBaseURL() + 'news/get_news/' + loadNewsCount + '/' + newsPerLoad + '/' + categoryId,
 			dataType: 'html',
 			beforeSend: function() {
 				$('.ajax-loader').show();
@@ -37,6 +58,10 @@ function loadNews(loadNewsCount, newsPerLoad) {
 			success: function(data) {
 				if (data) {
 					$('.ajax-loader').before(data);
+
+					if ($(data).size() < newsPerLoad) {
+						noMoreData = true;
+					}
 				}
 				else {
 					noMoreData = true;
@@ -46,7 +71,9 @@ function loadNews(loadNewsCount, newsPerLoad) {
 		$('.ajax-loader').hide();
 	}
 	else {
-		$('.ajax-message').html('Kõik uudised on laetud');
+		if ($('.ajax-loader').length > 0) {
+			$('.ajax-message').html('Kõik uudised on laetud');
+		}
 	}
 }
 

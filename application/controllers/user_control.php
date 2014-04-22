@@ -4,13 +4,18 @@ class User_control extends MY_Controller {
 
 	public function index() {
 		$this->load->model("user_model");
+		$this->load->model('category_model');
 
-		$data = array();
+		$data = array(
+			'users' => $this->user_model->get_all_users(),
+			'confirmation' => "",
+		);
 
-		$data["users"] = $this->user_model->get_all_users();
-		$data["confirmation"] = "";
-
-		$this->load->view('header', $this->get_session_data());
+		$header_data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $header_data);
 
 		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->admin)) {
 			$this->load->view("user_control", $data);

@@ -12,6 +12,10 @@ echo "<p>Sisu: ";
 echo form_textarea('content', $content);
 echo "</p>";
 
+echo "<p>Kategooria: ";
+echo form_dropdown('category_id', $category_options, $category_id);
+echo "</p>";
+
 echo "<p>Pilt: ";
 echo form_upload('image');
 echo "</p>";

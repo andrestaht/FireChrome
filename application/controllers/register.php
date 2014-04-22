@@ -17,7 +17,13 @@ class Register extends MY_Controller {
 	}
 
 	public function register($data) {
-		$this->load->view('header');
+		$this->load->model('category_model');
+
+		$header_data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $header_data);
 		$this->load->view('register', $data);
 		$this->load->view('footer');
 	}

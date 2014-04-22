@@ -8,8 +8,13 @@ class News extends MY_Controller {
 	public function index($id) {
 		$this->load->model('news_model');
 		$this->load->model('comment_model');
+		$this->load->model('category_model');
 
-		$this->load->view('header', $this->get_session_data());
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $data);
 		$this->load->view('news', $this->news_model->get_news_by_id($id));
 		
 		$data["comments"] = $this->comment_model->get_comments_for_news_by_id($id);
@@ -24,10 +29,16 @@ class News extends MY_Controller {
 	 * @param int $id
 	 */
 	public function add_news() {
-		$this->load->view('header', $this->get_session_data());
+		$this->load->model('category_model');
+
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $data);
 
 		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
-			$this->load->view('add_news');
+			$this->load->view('add_news', array('category_options' => $this->category_model->get_gategories_for_select()));
 		}
 		else {
 			$this->load->view('no_access');
@@ -64,6 +75,7 @@ class News extends MY_Controller {
 
 				$data = array(
 					'user_id' => $this->session->userdata('user_id'),
+					'category_id' => $this->input->post('category_id'),
 					'title' => $this->input->post('title'),
 					'content' => $this->input->post('content'),
 					'img_url' => base_url() . $uploadPath . "/" . $uploadData['orig_name'],
@@ -92,7 +104,13 @@ class News extends MY_Controller {
 			redirect('main');
 		}
 		else {
-			$this->load->view('header', $this->get_session_data());
+			$this->load->model('category_model');
+
+			$data = array(
+				'session_data' => $this->get_session_data(),
+				'menu_data' => $this->category_model->get_all_categories(),
+			);
+			$this->load->view('header', $data);
 			$this->load->view('no_access');
 			$this->load->view('footer');
 		}
@@ -105,11 +123,16 @@ class News extends MY_Controller {
 	 */
 	public function modify_news($id) {
 		$this->load->model('news_model');
+		$this->load->model('category_model');
 
-		$this->load->view('header', $this->get_session_data());
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $data);
 
 		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
-			$this->load->view('modify_news', $this->news_model->get_news_by_id($id));
+			$this->load->view('modify_news', array_merge($this->news_model->get_news_by_id($id), array('category_options' => $this->category_model->get_gategories_for_select())));
 		}
 		else {
 			$this->load->view('no_access');

@@ -5,8 +5,14 @@ class Main extends MY_Controller {
 	/**
 	 * Index page for main controller.
 	 */
-	public function index() {
-		$this->load->view('header', $this->get_session_data());
+	public function index($category_id = null) {
+		$this->load->model('category_model');
+
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $data);
 		$this->load->view('home');
 		$this->load->view('footer');
 	}
@@ -15,7 +21,13 @@ class Main extends MY_Controller {
 	 * Settings page for main controller.
 	 */
 	public function settings() {
-		$this->load->view('header', $this->get_session_data());
+		$this->load->model('category_model');
+
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $data);
 
 		if ($this->session->userdata('is_logged_in')) {
 			$this->load->view('settings');
@@ -56,22 +68,27 @@ class Main extends MY_Controller {
 	 * Logout function
 	 */
 	public function logout() {
-        if (empty($is_facebook_account)) {
-            $this->session->sess_destroy();
-            redirect('main', 'refresh');
-        } else {
-		  parse_str( $_SERVER['QUERY_STRING'], $_REQUEST );
-		  $CI = & get_instance();
-		  require_once( 'application/libraries/Facebook.php');
-		  $CI->config->load("facebook",TRUE);
-       	    $config = $CI->config->item('facebook');
-            $this->load->library('Facebook', $config);
-		  $args['next'] = base_url();
-		  $logoutUrl = $this->facebook->getLogoutUrl($args);
-		  $this->facebook->destroySession();		
-		  $this->session->sess_destroy();
-		  redirect($logoutUrl);	
-        }
+		require_once( 'application/libraries/Facebook.php');
+
+		$this->session->sess_destroy();
+
+		if (!empty($is_facebook_account)) {
+			$this->load->library('Facebook', $config);
+
+			parse_str($_SERVER['QUERY_STRING'], $_REQUEST);
+
+			$CI = &get_instance();
+			$CI->config->load('facebook', TRUE);
+
+			$config = $CI->config->item('facebook');
+
+			$args['next'] = base_url();
+
+			$this->facebook->destroySession();
+
+			redirect($this->facebook->getLogoutUrl($args));
+		}
+		redirect('main', 'refresh');
 	}
 }
 

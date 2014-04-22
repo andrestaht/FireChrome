@@ -2,7 +2,7 @@
  * BODY
  */
 body {
-	background-color: gray;
+	background-color: #b4b4b4;
 }
 
 /**
@@ -30,7 +30,6 @@ body {
 }
 .ajax-message {
 	float: left;
-	margin-top: 20px;
 }
 
 /**
@@ -40,33 +39,90 @@ body {
 	max-width: 1280px;
 	margin: 0 auto;
 	overflow: hidden;
+	border-left: 2px solid #000;
+	border-right: 2px solid #000;
 }
 
 /**
  * BUTTONS
  */
-#add-news-btn,
+#add-news-btn {
+	text-decoration: none;
+	color: #000;
+	font-size: 20px;
+	float: right;
+	margin: 11px 30px 11px 10px;
+}
 #add-comment-btn {
 	text-decoration: none;
 	color: #000;
 	font-size: 20px;
-}
-#add-comment-btn {
 	float: left;
 }
 #add-news-btn:hover,
 #add-comment-btn:hover {
 	color: #b0b0b0;
 }
+.back-to-top {
+	text-decoration: none;
+	color: #000;
+	float: right;
+	margin-right: 100px;
+}
+.back-to-top:hover {
+	color: #8e8e8e;
+}
 
 /**
  * HEADER
  */
 #header {
-	background-color: lightgreen;
+	background-color: #cecece;
 	padding: 40px;
 	float: left;
 	width: 100%;
+}
+#header-left {
+	float: left;
+}
+#header-right {
+	float: right;
+	margin-right: 100px;
+}
+
+/**
+ * MENUBAR
+ */
+#menu-bar {
+	background-color: #EBEBEB;
+	width: 100%;
+	float: left;
+	display: block;
+	border-top: 2px solid #000;
+	border-bottom: 2px solid #000;
+}
+#menu-bar ul {
+	width: 100%;
+}
+#menu-bar .menu-item {
+	display: inline-block;
+	float: left;
+}
+#menu-bar .menu-item.active a {
+	font-weight: bold;
+}
+#menu-bar .menu-item a {
+	color: #000;
+	text-decoration: none;
+	display: block;
+	font-size: 20px;
+	padding: 11px 30px;
+}
+#menu-bar .menu-item:hover a {
+	color: #8e8e8e;
+}
+#menu-bar .menu-item.active:hover a {
+	color: #000;
 }
 
 /**
@@ -144,7 +200,7 @@ body {
  * FOOTER
  */
 #footer {
-	background-color: yellow;
+	background-color: #EBEBEB;
 	padding: 40px;
 	float: left;
 	width: 100%;

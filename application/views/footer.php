@@ -1,6 +1,7 @@
 			</div>
 			<div id="footer">
-				<p>See on footer.</p>
+				<h1 class="ajax-message"></h1>
+				<a class="back-to-top" href="javascript:void(0);">Tagasi üles</a>
 			</div>
 		</div>
 	</body>

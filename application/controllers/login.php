@@ -4,11 +4,13 @@ class Login extends MY_Controller {
 
 	function __construct() {
 		parent::__construct();
-		parse_str( $_SERVER['QUERY_STRING'], $_REQUEST );
+
+		parse_str($_SERVER['QUERY_STRING'], $_REQUEST);
+
 		$CI = & get_instance();
-		$CI->config->load("facebook",TRUE);
-		$config = $CI->config->item('facebook');
-		$this->load->library('Facebook', $config);
+		$CI->config->load('facebook', TRUE);
+
+		$this->load->library('Facebook', $CI->config->item('facebook'));
 	}
 
 	/**
@@ -22,9 +24,15 @@ class Login extends MY_Controller {
 	 * Login Page login function.
 	 */
 	public function login() {
+		$this->load->model('category_model');
+
 		$this->session->set_userdata('url_before_login', $_SERVER['HTTP_REFERER']);
 
-		$this->load->view('header');
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $data);
 		$this->load->view('login');
 		$this->load->view('footer');
 	}
@@ -33,58 +41,58 @@ class Login extends MY_Controller {
 	 *Login function for Facebook.
 	 */
 	public function facebook_login() {
-
 		$userId = $this->facebook->getUser();
 
 		if ($userId == 0) {
 			redirect($this->facebook->getLoginUrl(array('scope'=>'email')));
-		} else {
+		}
+		else {
 			$user = $this->facebook->api('/me');
+
 			$userdata = array(
-					'user_id' => $user['id'],
-					'username' => $user['name'],
-					'email' => $user['email'],
-					'is_logged_in' => 1,
-					'level' => 1,
-					'is_facebook_account' => 1,
+				'user_id' => $user['id'],
+				'username' => $user['name'],
+				'email' => $user['email'],
+				'is_logged_in' => 1,
+				'level' => 1,
+				'is_facebook_account' => 1,
 			);
 			$this->session->set_userdata($userdata);
-
 		}
-
 		$this->load->model('user_model');
+
 		$temp = $this->user_model->get_all_users();
 		$bool = false;
-			
+
 		foreach ($temp as $row) {
-			if ($row->facebook_id == $userdata['user_id']){
+			if ($row->facebook_id == $userdata['user_id']) {
 				$bool = true;
 				break;
 			}
 		}
-		if ($bool == false){
+		if ($bool == false) {
 			$data = array(
-					'username' => $user['name'],
-					'password' => 'test',
-					'email' => $user['email'],
-					'password' => 555,
-					'facebook_id' => $user['id'],
+				'username' => $user['name'],
+				'password' => 'test',
+				'email' => $user['email'],
+				'password' => 555,
+				'facebook_id' => $user['id'],
 			);
-			$this->db->insert('user',$data);
+			$this->db->insert('user', $data);
 		}
-
 		$temp = $this->user_model->get_all_users();
 		$uid = 0;
+
 		foreach ($temp as $row) {
-			if ($row->facebook_id == $userdata['user_id']){
+			if ($row->facebook_id == $userdata['user_id']) {
 				$uid = $row->id;
 			}
 		}
 		$userdata = array(
-				'user_id' => $uid,
+			'user_id' => $uid,
 		);
 		$this->session->set_userdata($userdata);
-			
+
 		$url = $this->session->userdata('url_before_login');
 		$this->session->unset_userdata('url_before_login');
 
@@ -107,11 +115,11 @@ class Login extends MY_Controller {
 			$userData = $this->user_model->get_user_data_by_email($this->input->post('email'));
 
 			$data = array(
-					'user_id' => $userData->id,
-					'username' => $userData->username,
-					'email' => $userData->email,
-					'level' => $userData->level,
-					'is_logged_in' => 1,
+				'user_id' => $userData->id,
+				'username' => $userData->username,
+				'email' => $userData->email,
+				'level' => $userData->level,
+				'is_logged_in' => 1,
 			);
 			$this->session->set_userdata($data);
 
@@ -135,7 +143,13 @@ class Login extends MY_Controller {
 	}
 
 	public function forgot_password() {
-		$this->load->view('header', array('is_logged_in' => $this->session->userdata('is_logged_in')));
+		$this->load->model('category_model');
+
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $data);
 		$this->load->view('forgot_password');
 		$this->load->view('footer');
 	}
@@ -179,7 +193,7 @@ class Login extends MY_Controller {
 						echo "E-mail saadetud!";
 					}
 					else {
-						echo "E-maili saatmine ebaõnnestus!";
+						echo "E-maili saatmine ebaï¿½nnestus!";
 					}
 					redirect('login');
 				}

@@ -7,8 +7,13 @@ class Comment extends MY_Controller {
 	 */
 	public function index($id) {
 		$this->load->model('news_model');
+		$this->load->model('category_model');
 
-		$this->load->view('header', $this->get_session_data());
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $data);
 		$this->load->view('news', $this->news_model->get_news_by_id($id));
 		$this->load->view('comments', $this->get_session_data());
 		$this->load->view('footer');
@@ -33,28 +38,34 @@ class Comment extends MY_Controller {
 			);
 			$this->comment_model->insert($comment_data);
 			echo "Kommentaar lisatud.";
-		}else{
+		}
+		else{
 			echo "Captcha vale.";
 		}
 	}
 	
-	public function load_comments($id){
+	public function load_comments($id) {
 		$this->load->model('comment_model');
-		$comments=$this->comment_model->get_comments_for_news_by_id($id);
-		foreach ($comments as $comment){
+
+		$comments = $this->comment_model->get_comments_for_news_by_id($id);
+
+		foreach ($comments as $comment) {
 			echo "<div class='comment'>";
-			echo "<h1 class='comment-author'>Autor: ". $comment->username . " - " . $comment->date . "</h1>";
+			echo "<h1 class='comment-author'>Autor: " . $comment->username . " - " . $comment->date . "</h1>";
 			echo "<p class='comment-content'>" . $comment->content . "</p>";
-			if ($this->user_has_access(5)){
-				echo "<a class='delete-comment-btn' href='javascript:void(0);' onclick='deleteComment(". $comment->id .", this)'>Kustuta</a>";}
-			echo "</div>";}
+
+			if ($this->user_has_access(5)) {
+				echo "<a class='delete-comment-btn' href='javascript:void(0);' onclick='deleteComment(". $comment->id . ", this)'>Kustuta</a>";
+			}
+			echo "</div>";
+		}
 	}
 	
-	public function delete_comment($id){
+	public function delete_comment($id) {
 		$this->load->model('comment_model');
-		
+
 		$this->comment_model->delete_comment_by_id($id);
-		
+
 		echo "kommentaar kustutatud";
 	}
 }

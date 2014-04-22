@@ -8,8 +8,7 @@
 				<th>Kustuta</th>
 			</tr>
 			<?php
-				foreach ( $users as $row ) {
-
+				foreach ($users as $row) {
 					echo "<tr>";
 					echo "<td>" . $row->username . "</td>";
 					echo "<td>" . $row->email . "</td>";

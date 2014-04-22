@@ -11,30 +11,48 @@
 	<body class="no-js">
 		<div id="wrap">
 			<div id="header">
-				<a href="<?php echo base_url() ?>"><span id="logo"></span></a>
-				<?php if (empty($is_logged_in)) { ?>
-				<a id="login" href="<?php echo base_url() . "login" ?>">Logi Sisse</a>
-				<a id="register" href="<?php echo base_url() . "register" ?>">Registreeri</a>
-				<?php } else { ?>
-				<h1>Tere <?php echo $username; ?>!</h1>
-                    <?php if (empty($is_facebook_account)) { ?>
-				    <a id="settings" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
-                    <?php } ?>                
-				<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
-				<?php } ?>
-				<div id="current-time">
+				<div id="header-left">
+					<a href="<?php echo base_url() ?>"><span id="logo"></span></a>
 				</div>
-                <div id="search-form">
-                    <?php
-                        $form_entry = array('entry' => 's_entry');   
-                        echo form_open('search_results');
-                        echo "<div>";
-                        echo form_input('s_result', $this->input->post('s_result'));
-                        echo form_submit('search_results', 'Otsi!');
-                        echo "</div>";
-                        echo form_close();
-                    ?>
-                </div>
+				<div id="header-right">
+					<div id="header-login">
+						<?php if (empty($session_data['is_logged_in'])) { ?>
+						<a id="login" href="<?php echo base_url() . "login" ?>">Logi Sisse</a>
+						<a id="register" href="<?php echo base_url() . "register" ?>">Registreeri</a>
+						<?php } else { ?>
+						<h1>Tere <?php echo $session_data['username']; ?>!</h1>
+							<?php if (empty($session_data['is_facebook_account'])) { ?>
+							<a id="settings" href="<?php echo base_url() . "main/settings" ?>">Seaded</a>
+							<?php } ?>
+						<a id="logout" href="<?php echo base_url() . "main/logout" ?>">Logi välja</a>
+						<?php } ?>
+					</div>
+					<div id="current-time">
+					</div>
+					<div id="search-form">
+						<?php
+							$form_entry = array('entry' => 's_entry');
+
+							echo form_open('search_results');
+
+							echo "<div>";
+							echo form_input('s_result', $this->input->post('s_result'));
+							echo form_submit('search_results', 'Otsi!');
+							echo "</div>";
+
+							echo form_close();
+						?>
+					</div>
+				</div>
 			</div>
-            
+			<div id="menu-bar">
+				<ul>
+				<?php foreach ($menu_data as $menu_item) { ?>
+					<li class="menu-item"><a id="menu-item-<?php echo $menu_item->id ?>" href="<?php echo base_url() . "main/index/" . $menu_item->id ?>"><?php echo $menu_item->name ?></a></li>
+				<?php } ?>
+				<?php if ($session_data['level'] > 1) { ?>
+					<li><a id="add-news-btn" href="<?php echo base_url() . "news/add_news" ?>">Lisa uudis</a></li>
+				<?php } ?>
+				</ul>
+			</div>
 			<div id="content">

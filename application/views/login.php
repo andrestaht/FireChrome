@@ -14,7 +14,7 @@
 		echo "<p>";
 		echo form_submit('login-submit-btn', 'Logi Sisse');
 		?>
-		<a href=<?php echo base_url() . "login/facebook_login"?>>Facebook</a>
+		<a href="<?php echo base_url() . "login/facebook_login" ?>">Facebook</a>
 		<?php
 		echo "</p>";
 	
