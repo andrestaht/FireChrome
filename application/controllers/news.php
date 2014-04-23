@@ -84,6 +84,8 @@ class News extends MY_Controller {
 				$id = $this->news_model->add_news($data);
 
 				if (!empty($id)) {
+					$this->db->cache_delete_all();
+
 					redirect('news/index/' . $id);
 				}
 			}
@@ -100,6 +102,8 @@ class News extends MY_Controller {
 		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
 			$this->load->model('news_model');
 			$this->news_model->delete_news_by_id($id);
+
+			$this->db->cache_delete_all();
 
 			redirect('main');
 		}
@@ -175,6 +179,8 @@ class News extends MY_Controller {
 					'is_visible' => $this->input->post('isVisible') !== false ? 1 : null,
 				);
 				if ($this->news_model->modify_news_by_id($id, $data)) {
+					$this->db->cache_delete_all();
+
 					redirect('news/index/' . $id);
 				}
 			}

@@ -16,7 +16,7 @@ class MY_Controller extends CI_Controller {
 			'email' => $this->session->userdata('email'),
 			'level' => $this->session->userdata('level'),
 			'is_logged_in' => $this->session->userdata('is_logged_in'),
-            'is_facebook_account' => $this->session->userdata('is_facebook_account'),
+			'is_facebook_account' => $this->session->userdata('is_facebook_account'),
 		);
 	}
 

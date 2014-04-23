@@ -28,9 +28,9 @@ class User_control extends MY_Controller {
 
 	public function update_users() {
 		$this->load->model("user_model");
+		$this->load->model('category_model');
 
 		$post = array();
-		$data = array();
 
 		foreach ($this->input->post() as $id => $level) {
 			$post[] = array(
@@ -40,10 +40,15 @@ class User_control extends MY_Controller {
 		}
 		$this->user_model->update_user_levels_by_ids($post);
 
-		$data["users"] = $this->user_model->get_all_users();
-		$data["confirmation"] = "Andmed muudetud";
-
-		$this->load->view('header', $this->get_session_data());
+		$data = array(
+			'users' => $this->user_model->get_all_users(),
+			'confirmation' => "Andmed muudetud",
+		);
+		$header_data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$this->load->view('header', $header_data);
 		$this->load->view("user_control", $data);
 		$this->load->view("footer");
 	}

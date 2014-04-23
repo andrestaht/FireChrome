@@ -7,6 +7,7 @@ class User_model extends CI_Model {
 		$this->db->where('email', $this->input->post('email'));
 		$this->db->where('password', md5($this->input->post('password')));
 
+		$this->db->cache_off();
 		$query = $this->db->get($this->name);
 
 		if ($query->num_rows() == 1) {
@@ -17,6 +18,8 @@ class User_model extends CI_Model {
 
 	public function add_user($key) {
 		$this->db->where('key', $key);
+
+		$this->db->cache_off();
 		$tempUsersQuery = $this->db->get('temp_user');
 
 		if ($tempUsersQuery) {
@@ -53,6 +56,8 @@ class User_model extends CI_Model {
 
 	public function does_email_exists($email) {
 		$this->db->where('email', $email);
+
+		$this->db->cache_off();
 		$query = $this->db->get($this->name);
 
 		if ($query->num_rows() == 1) {
@@ -65,6 +70,7 @@ class User_model extends CI_Model {
 		$this->db->where('email', $email);
 		$this->db->where('password', md5($password));
 
+		$this->db->cache_off();
 		$query = $this->db->get($this->name);
 
 		if ($query->num_rows() == 1) {
@@ -76,6 +82,7 @@ class User_model extends CI_Model {
 	public function get_user_data_by_email($email) {
 		$this->db->where('email', $email);
 
+		$this->db->cache_off();
 		$query = $this->db->get($this->name);
 
 		return $query->row();
@@ -87,16 +94,21 @@ class User_model extends CI_Model {
 		$this->db->order_by('level', 'desc');
 		$this->db->order_by('username', 'asc');
 
+		$this->db->cache_off();
 		$query = $this->db->get($this->name);
 
 		return $query->result();
 	}
 
 	public function update_user_levels_by_ids($data) {
- 		$this->db->update_batch($this->name, $data, "id");
+		$this->db->cache_off();
+
+		$this->db->update_batch($this->name, $data, "id");
 	}
 	
-	public function delete_user_by_id($id){
-		$this->db->delete($this->name, array('id'=>$id));		
+	public function delete_user_by_id($id) {
+		$this->db->cache_off();
+
+		$this->db->delete($this->name, array('id' => $id));
 	}
 }

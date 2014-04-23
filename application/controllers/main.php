@@ -7,10 +7,12 @@ class Main extends MY_Controller {
 	 */
 	public function index($category_id = null) {
 		$this->load->model('category_model');
+		$this->load->model('news_model');
 
 		$data = array(
 			'session_data' => $this->get_session_data(),
 			'menu_data' => $this->category_model->get_all_categories(),
+			'news_data' => $this->news_model->get_news($category_id),
 		);
 		$this->load->view('header', $data);
 		$this->load->view('home');

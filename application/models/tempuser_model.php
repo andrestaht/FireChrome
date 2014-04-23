@@ -10,6 +10,7 @@ class TempUser_model extends CI_Model {
 			'email' => $this->input->post('email'),
 			'key' => $key,
 		);
+		$this->db->cache_off();
 		$query = $this->db->insert($this->name, $data);
 
 		if ($query) {
@@ -20,7 +21,8 @@ class TempUser_model extends CI_Model {
 
 	public function is_key_valid($key) {
 		$this->db->where('key', $key);
-		
+
+		$this->db->cache_off();
 		$query = $this->db->get($this->name);
 		
 		if ($query->num_rows() == 1) {

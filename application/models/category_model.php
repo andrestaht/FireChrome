@@ -22,6 +22,7 @@ class Category_model extends CI_Model {
 		$this->db->where('id != ', MAIN_PAGE_ID);
 		$this->db->where('id != ', MOST_VIEWED_ID);
 
+		$this->db->cache_off();
 		$query = $this->db->get();
 		$results = $query->result();
 

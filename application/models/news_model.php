@@ -64,12 +64,10 @@ class News_model extends CI_Model {
 	/**
 	 * Gets news for home page
 	 *
-	 * @param int $postition
-	 * @param int $limit
 	 * @param int $category_id
 	 * @return array $data
 	 */
-	public function get_news($position, $limit, $category_id) {
+	public function get_news($category_id) {
 		if ($category_id != null) {
 			if ($category_id == MOST_VIEWED_ID) {
 				$this->db->order_by('view_count desc, id desc');
@@ -82,7 +80,6 @@ class News_model extends CI_Model {
 				$this->db->order_by('id', 'desc');
 			}
 		}
-		$this->db->limit($limit, ($position * $limit));
 		$newsQuery = $this->db->get($this->name);
 
 		return $newsQuery->result();
