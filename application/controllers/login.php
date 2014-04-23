@@ -32,8 +32,9 @@ class Login extends MY_Controller {
 			'session_data' => $this->get_session_data(),
 			'menu_data' => $this->category_model->get_all_categories(),
 		);
+		$flashdata["msg"]=$this->session->flashdata("msg");
 		$this->load->view('header', $data);
-		$this->load->view('login');
+		$this->load->view('login', $flashdata);
 		$this->load->view('footer');
 	}
 
@@ -149,8 +150,9 @@ class Login extends MY_Controller {
 			'session_data' => $this->get_session_data(),
 			'menu_data' => $this->category_model->get_all_categories(),
 		);
+		$flashdata["msg"]=$this->session->flashdata("msg");
 		$this->load->view('header', $data);
-		$this->load->view('forgot_password');
+		$this->load->view('forgot_password', $flashdata);
 		$this->load->view('footer');
 	}
 
@@ -190,19 +192,21 @@ class Login extends MY_Controller {
 			if ($this->user_model->does_email_exists($email)) {
 				if ($this->user_model->change_password_by_email($email, $password)) {
 					if ($this->email->send()) {
-						echo "E-mail saadetud!";
+						$this->session->set_flashdata('msg', 'E-mail saadetud');
 					}
 					else {
-						echo "E-maili saatmine eba�nnestus!";
+						$this->session->set_flashdata('msg', 'E-maili saatmine ebaõnnestus. Proovige uuesti.');
 					}
 					redirect('login');
 				}
 				else {
-					echo "Parooli ei uuendatud!";
+					$this->session->set_flashdata('msg', 'Parooli ei uudendatud');
+					redirect('login/forgot_password');
 				}
 			}
 			else {
-				echo "Sellist e-maili ei eksisteeri";
+				$this->session->set_flashdata('msg', 'Sellist E-maili ei leidu.');
+				redirect('login/forgot_password');
 			}
 		}
 		else {

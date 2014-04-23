@@ -1,4 +1,8 @@
 <h1>Seaded</h1>
+<?php
+	if(!empty($msg)){
+			echo "<div id='settings-msg'>".$msg."</div>";}
+	?>
 <?php if ($session_data['level'] > 5) { ?>
 	<a id="usercontrol" href="<?php echo base_url() . "user_control" ?>">Halda Kasutajaid</a>
 <?php } ?>

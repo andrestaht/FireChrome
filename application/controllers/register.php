@@ -75,14 +75,14 @@ class Register extends MY_Controller {
 
 			if ($this->tempuser_model->add_user($key)) {
 				if ($this->email->send()) {
-					$msg['error'] = "E-mail saadetud!";
+					$this->session->set_flashdata("msg","E-mail saadetud konto aktiveerimiseks");
 				}
 				else {
-					$msg['error'] = "E-maili saatmine ebaõnnestus!";
+					$this->session->set_flashdata("msg","E-maili saatmine ebaõnnestus!");
 				}
 			}
 			else {
-				$msg['error'] = "Ei lisatud andmebaasi kasutajat";
+				$this->session->set_flashdata("msg", "Ei lisatud andmebaasi kasutajat");
 			}
 			redirect('main');
 		}
@@ -103,12 +103,13 @@ class Register extends MY_Controller {
 				$this->session->set_userdata($data);
 			}
 			else {
-				echo "Kasutaja pole aktiveeritud!";
+				$this->session->set_flashdata("msg","Kasutaja pole aktiveeritud!" );
 			}
 			redirect('main');
 		}
 		else {
-			echo "Aktiveerimisvõti on vale!";
+			$this->session->set_flashdata("msg","Aktiveermisvõti on vale" );
+			redirect('main');
 		}
 	}
 }

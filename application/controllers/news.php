@@ -38,7 +38,7 @@ class News extends MY_Controller {
 		$this->load->view('header', $data);
 
 		if ($this->session->userdata('is_logged_in') && $this->user_has_access($this->editor)) {
-			$this->load->view('add_news', array('category_options' => $this->category_model->get_gategories_for_select()));
+			$this->load->view('add_news', array('category_options' => $this->category_model->get_gategories_for_select(), 'msg' => $this->session->flashdata("msg")));
 		}
 		else {
 			$this->load->view('no_access');
@@ -67,7 +67,7 @@ class News extends MY_Controller {
 			$this->load->library('upload', $config);
 
 			if (!$this->upload->do_upload('image')) {
-				echo "Faili ei suudetud üles laadida!";
+				$this->session->set_flashdata("msg", $this->upload->display_errors('', ''));
 			}
 			else {
 				$uploadData = $this->upload->data();

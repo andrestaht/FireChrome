@@ -1,5 +1,7 @@
 <div id="news-feed">
 	<?php
+		if(!empty($msg)){
+		echo "<div id='home-msg'>".$msg."</div>";}
 		if (!empty($news_data)) {
 			foreach ($news_data as $news) {
 				if (!empty($news->is_visible) || $session_data['level'] > 1) {

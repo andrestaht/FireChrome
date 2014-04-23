@@ -2,6 +2,10 @@
 
 echo validation_errors();
 
+if(!empty($msg)){
+	echo "<div id='add-news-msg'>".$msg."</div>";}
+
+
 echo form_open_multipart('news/add_news_validation', array('id' => 'add-news-form'));
 
 echo "<p>Pealkiri: ";

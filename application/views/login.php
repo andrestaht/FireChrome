@@ -1,5 +1,8 @@
 	<?php
 		echo validation_errors();
+
+	if(!empty($msg)){
+			echo "<div id='login-msg'>".$msg."</div>";}
 		
 		echo form_open('login/login_validation', array('id' => 'login-form'));
 	

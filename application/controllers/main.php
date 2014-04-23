@@ -14,8 +14,10 @@ class Main extends MY_Controller {
 			'menu_data' => $this->category_model->get_all_categories(),
 			'news_data' => $this->news_model->get_news($category_id),
 		);
+
+		$flashmsg["msg"]=$this->session->flashdata("msg");
 		$this->load->view('header', $data);
-		$this->load->view('home');
+		$this->load->view('home',$flashmsg);
 		$this->load->view('footer');
 	}
 
@@ -32,7 +34,8 @@ class Main extends MY_Controller {
 		$this->load->view('header', $data);
 
 		if ($this->session->userdata('is_logged_in')) {
-			$this->load->view('settings');
+			$flashmsg["msg"]= $this->session->flashdata("msg");
+			$this->load->view('settings', $flashmsg);
 		}
 		else {
 			$this->load->view('no_access');
@@ -56,14 +59,20 @@ class Main extends MY_Controller {
 
 			if ($this->user_model->is_password_correct_by_email($email, $this->input->post('password'))) {
 				if ($this->user_model->change_password_by_email($email, $this->input->post('npassword'))) {
-					echo "Parool edukalt muudetud";
+					$this->session->set_flashdata('msg', 'Parool edukalt muudetud');
 				}
 				else {
-					echo "Parooli ei muudetud";
+					$this->session->set_flashdata('msg', 'Parooli ei muudetud');
 				}
 			}
+			else {
+				$this->session->set_flashdata('msg', 'Olemasolev parool oli sisestatud valesti');
+			}
 		}
-		$this->settings();
+		else{
+			$this->session->set_flashdata('msg', 'Paroolid ei ühti');
+		}
+		redirect('main/settings', 'refresh');
 	}
 
 	/**

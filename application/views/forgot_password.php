@@ -2,6 +2,9 @@
 	require_once(APPPATH . 'libraries/Recaptchalib.php');
 
 	echo validation_errors();
+	
+	if(!empty($msg)){
+		echo "<div id='forgot-pw-msg'>".$msg."</div>";}
 
 	echo form_open('login/reset_password', array('id' => 'forgot-password-form'));
 
