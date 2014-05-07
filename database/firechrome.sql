@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2014 at 02:46 PM
+-- Generation Time: May 07, 2014 at 07:04 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `content` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_comments_to_users` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `comment`
@@ -74,7 +74,8 @@ INSERT INTO `comment` (`id`, `user_id`, `news_id`, `date`, `content`) VALUES
 (3, 4, NULL, '2014-03-27 12:02:59', 'dfbfdb'),
 (4, 4, NULL, '2014-03-27 12:03:45', 'hngfngfn'),
 (5, 4, NULL, '2014-03-27 12:04:57', 'tere'),
-(6, 4, NULL, '2014-04-01 15:31:24', '21');
+(6, 4, NULL, '2014-04-01 15:31:24', '21'),
+(8, 4, 10, '2014-04-23 10:16:47', 'tere');
 
 -- --------------------------------------------------------
 
@@ -94,29 +95,29 @@ CREATE TABLE IF NOT EXISTS `news` (
   `is_visible` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_news_to_users` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `news`
 --
 
 INSERT INTO `news` (`id`, `user_id`, `category_id`, `title`, `date`, `content`, `img_url`, `view_count`, `is_visible`) VALUES
-(9, 4, 3, 'Uudis 1', '2014-03-25 15:24:03', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 2, 1),
+(9, 4, 3, 'Uudis 1', '2014-03-25 15:24:03', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 3, 1),
 (10, 4, 3, 'Uudis 2', '2014-03-25 15:40:14', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/hmd_logo.jpg', 3, 1),
-(11, 4, 3, 'Uudis 3', '2014-03-25 15:44:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 3, 1),
-(12, 4, 3, 'Uudis 4', '2014-03-25 15:45:14', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/hmd_logo.jpg', 1, 1),
+(11, 4, 3, 'Uudis 3', '2014-03-25 15:44:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 4, 1),
+(12, 4, 3, 'Uudis 4', '2014-03-25 15:45:14', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/hmd_logo.jpg', 2, 1),
 (13, 4, 4, 'Uudis 5', '2014-03-25 15:46:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 2, 1),
 (14, 4, 4, 'Uudis 6', '2014-03-25 15:40:14', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/hmd_logo.jpg', 1, 1),
-(15, 4, 7, 'Uudis 7', '2014-03-25 15:47:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 1, 1),
-(16, 4, 6, 'Uudis 8', '0000-00-00 00:00:00', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/hmd_logo.jpg', 1, 1),
+(15, 4, 7, 'Uudis 7', '2014-03-25 15:47:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 2, 1),
+(16, 4, 6, 'Uudis 8', '0000-00-00 00:00:00', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/hmd_logo.jpg', 2, 1),
 (17, 4, 3, 'Uudis 9', '2014-03-25 15:50:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 1, 1),
 (18, 4, 5, 'Uudis 10', '2014-03-25 16:00:14', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/hmd_logo.jpg', 1, 1),
 (19, 4, 4, 'Uudis 11', '2014-03-25 16:05:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 4, 1),
 (20, 4, 5, 'Uudis 12', '2014-03-25 16:10:14', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/hmd_logo.jpg', 2, 1),
 (21, 4, 3, 'Uudis 13', '2014-03-25 16:15:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 2, 1),
 (22, 4, 4, 'Uudis 14', '2014-03-25 16:20:14', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/bc_cover.png', 4, 1),
-(23, 4, 5, 'Uudis 15', '2014-03-25 16:25:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 18, 1),
-(25, 4, 6, 'test', '2014-04-22 12:22:23', 'test', 'http://localhost/FireChrome/uploads/doge-finished.jpg', 4, 1);
+(23, 4, 5, 'Uudis 15', '2014-03-25 16:25:34', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in vLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus ac nunc id bibendum. Quisque feugiat, justo quis molestie sagittis, velit risus viverra est, sit amet feugiat diam risus sit amet tortor. Sed ac ligula non lectus lobortis tempor in v', 'http://localhost/FireChrome/uploads/minion.jpg', 1, 1),
+(26, 4, 8, 'test', '2014-04-23 10:17:20', 'joujou', 'http://localhost/FireChrome/uploads/pidu.jpg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -130,8 +131,9 @@ CREATE TABLE IF NOT EXISTS `temp_user` (
   `email` varchar(100) NOT NULL,
   `password` varchar(50) NOT NULL,
   `key` varchar(255) CHARACTER SET ucs2 NOT NULL,
+  `wants_newsletter` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 -- --------------------------------------------------------
 
@@ -146,15 +148,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `level` enum('1','5','10') NOT NULL,
+  `wants_newsletter` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `facebook_id`, `username`, `password`, `email`, `level`) VALUES
-(4, NULL, 'andres', '3bb1c34b67646664417d777ed6083f4a', 'andres.taht@gmail.com', '10');
+INSERT INTO `user` (`id`, `facebook_id`, `username`, `password`, `email`, `level`, `wants_newsletter`) VALUES
+(4, NULL, 'andres', 'e391ce69317202e6840cb217f7283b56', 'andres.taht@gmail.com', '10', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
