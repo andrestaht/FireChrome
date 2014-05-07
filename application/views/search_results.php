@@ -6,10 +6,10 @@
 			if (!empty($row['is_visible']) || $session_data['level'] > 1) {
 				echo '<div class="news"><a href="' . base_url() . 'news/index/' .  $row['id'] . '">';
 				echo '<img src="' . $row['img_url'] . '" alt="' . $row['title'] . '" width="250" height="250" />';
-				echo '<h1 class="news-title">' . $row['title'] . '</h1></a>';
+				echo '<span class="news-title">' . $row['title'] . '</span></a>';
 			
 				if (empty($row['is_visible'])) {
-					echo '<h1 class="news-is-invisible">Uudis pole nähtav</h1>';
+					echo '<span class="news-is-invisible">Uudis pole nähtav</span>';
 				}
 				echo '</div>';
 			}

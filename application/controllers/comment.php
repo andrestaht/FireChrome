@@ -51,7 +51,7 @@ class Comment extends MY_Controller {
 
 		foreach ($comments as $comment) {
 			echo "<div class='comment'>";
-			echo "<h1 class='comment-author'>Autor: " . $comment->username . " - " . $comment->date . "</h1>";
+			echo "<span class='comment-author'>Autor: " . $comment->username . " - " . $comment->date . "</span>";
 			echo "<p class='comment-content'>" . $comment->content . "</p>";
 
 			if ($this->user_has_access(5)) {

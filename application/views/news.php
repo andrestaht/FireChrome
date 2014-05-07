@@ -3,7 +3,7 @@
 <a id="modify-news-btn" href="<?php echo base_url() . "news/modify_news/" . $id ?>">Muuda uudist</a>
 <?php } ?>
 <div id="news">
-	<h1 id="news-title"><?php echo $title ?></h1>
+	<span id="news-title"><?php echo $title ?></span>
 	<div id="news-image">
 		<img src="<?php echo $imgUrl ?>" alt="<?php echo $title ?>" width="400" height="400" />
 	</div>
