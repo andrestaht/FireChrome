@@ -75,10 +75,10 @@ class Register extends MY_Controller {
 
 			if ($this->tempuser_model->add_user($key)) {
 				if ($this->email->send()) {
-					$this->session->set_flashdata("msg","E-mail saadetud konto aktiveerimiseks");
+					$this->session->set_flashdata("msg", "E-mail saadetud konto aktiveerimiseks");
 				}
 				else {
-					$this->session->set_flashdata("msg","E-maili saatmine ebaõnnestus!");
+					$this->session->set_flashdata("msg", "E-maili saatmine ebaõnnestus!");
 				}
 			}
 			else {

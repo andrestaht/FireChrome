@@ -30,6 +30,7 @@ class User_model extends CI_Model {
 				'email' => $row->email,
 				'password' => $row->password,
 				'level' => 1,
+				'wants_newsletter' => $row->wants_newsletter,
 			);
 			$usersQuery = $this->db->insert($this->name, $data);
 		}
@@ -89,7 +90,7 @@ class User_model extends CI_Model {
 	}
 
 	public function get_all_users() {
-		$this->db->select("id,username, email, level, facebook_id");
+		$this->db->select("*");
 
 		$this->db->order_by('level', 'desc');
 		$this->db->order_by('username', 'asc');
@@ -103,12 +104,61 @@ class User_model extends CI_Model {
 	public function update_user_levels_by_ids($data) {
 		$this->db->cache_off();
 
-		$this->db->update_batch($this->name, $data, "id");
+		foreach ($data as $row) {
+			$this->db->where('id', $row['id']);
+
+			$this->db->update(
+				$this->name,
+				array(
+					'level' => $row['level'],
+					'wants_newsletter' => $row['wants_newsletter'] == true ? 1 : null,
+				)
+			);
+		}
+		return true;
 	}
-	
+
 	public function delete_user_by_id($id) {
 		$this->db->cache_off();
 
 		$this->db->delete($this->name, array('id' => $id));
+	}
+
+	public function check_if_user_wants_newsletter($id) {
+		$this->db->select("wants_newsletter");
+
+		$this->db->where('id', $id);
+
+		$this->db->cache_off();
+		$query = $this->db->get($this->name);
+		$data = $query->row();
+
+		if ($data->wants_newsletter != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public function update_newsletter_subscription($id, $value) {
+		$this->db->where('id', $id);
+
+		$this->db->update(
+			$this->name,
+			array(
+				'wants_newsletter' => $value,
+			)
+		);
+		return true;
+	}
+
+	public function get_all_users_with_newsletter_subscription() {
+		$this->db->select("username, email");
+
+		$this->db->where('wants_newsletter IS NOT NULL');
+
+		$this->db->cache_off();
+		$query = $this->db->get($this->name);
+
+		return $query->result();
 	}
 }

@@ -32,11 +32,14 @@ class User_control extends MY_Controller {
 
 		$post = array();
 
-		foreach ($this->input->post() as $id => $level) {
-			$post[] = array(
-				'id' => $id,
-				'level' => $level,
-			);
+		foreach ($this->input->post() as $id => $post_data) {
+			if (preg_match("/\d+/", $id)) {
+				$post[] = array(
+					'id' => $id,
+					'level' => $post_data['level'],
+					'wants_newsletter' => $post_data['wants_newsletter'],
+				);
+			}
 		}
 		$this->user_model->update_user_levels_by_ids($post);
 
@@ -52,13 +55,61 @@ class User_control extends MY_Controller {
 		$this->load->view("user_control", $data);
 		$this->load->view("footer");
 	}
-	
+
 	public function delete_user($id) {
 		$this->load->model("user_model");
-		
+
 		$this->user_model->delete_user_by_id($id);
-		
+
 		redirect('user_control', 'refresh');
+	}
+
+	public function remove_newsletter_subscription($user_id) {
+		$this->load->model("user_model");
+
+		$this->user_model->update_newsletter_subscription($user_id, null);
+
+		redirect('main/settings', 'refresh');
+	}
+
+	public function add_newsletter_subscription($user_id) {
+		$this->load->model("user_model");
+
+		$this->user_model->update_newsletter_subscription($user_id, true);
+
+		redirect('main/settings', 'refresh');
+	}
+
+	/**
+	 * Changed password validation function.
+	 */
+	public function change_password_validation() {
+		$this->load->library('form_validation');
+	
+		$this->form_validation->set_rules('password', 'Praegune parool', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('npassword', 'Uus parool', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('anpassword', 'Uus parool uuesti', 'required|trim|matches[npassword]|xss_clean');
+	
+		if ($this->form_validation->run()) {
+			$this->load->model('user_model');
+			$email = $this->session->userdata('email');
+	
+			if ($this->user_model->is_password_correct_by_email($email, $this->input->post('password'))) {
+				if ($this->user_model->change_password_by_email($email, $this->input->post('npassword'))) {
+					$this->session->set_flashdata('msg', 'Parool edukalt muudetud');
+				}
+				else {
+					$this->session->set_flashdata('msg', 'Parooli ei muudetud');
+				}
+			}
+			else {
+				$this->session->set_flashdata('msg', 'Olemasolev parool oli sisestatud valesti');
+			}
+		}
+		else{
+			$this->session->set_flashdata('msg', 'Paroolid ei ühti');
+		}
+		redirect('main/settings', 'refresh');
 	}
 }
 

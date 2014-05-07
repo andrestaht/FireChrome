@@ -15,9 +15,9 @@ class Main extends MY_Controller {
 			'news_data' => $this->news_model->get_news($category_id),
 		);
 
-		$flashmsg["msg"]=$this->session->flashdata("msg");
+		$flashmsg["msg"] = $this->session->flashdata("msg");
 		$this->load->view('header', $data);
-		$this->load->view('home',$flashmsg);
+		$this->load->view('home', $flashmsg);
 		$this->load->view('footer');
 	}
 
@@ -25,16 +25,20 @@ class Main extends MY_Controller {
 	 * Settings page for main controller.
 	 */
 	public function settings() {
+		$this->load->model('user_model');
 		$this->load->model('category_model');
 
+		$session_data = $this->get_session_data();
+
 		$data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 		$this->load->view('header', $data);
 
 		if ($this->session->userdata('is_logged_in')) {
-			$flashmsg["msg"]= $this->session->flashdata("msg");
+			$flashmsg["msg"] = $this->session->flashdata("msg");
 			$this->load->view('settings', $flashmsg);
 		}
 		else {
@@ -43,36 +47,64 @@ class Main extends MY_Controller {
 		$this->load->view('footer');
 	}
 
-	/**
-	 * Changed password validation function.
-	 */
-	public function change_password_validation() {
+	public function write_newsletter() {
+		$this->load->model('news_model');
+		$this->load->model('category_model');
+
+		$data = array(
+			'session_data' => $this->get_session_data(),
+			'menu_data' => $this->category_model->get_all_categories(),
+		);
+		$flashmsg["msg"] = $this->session->flashdata("msg");
+
+		$this->load->view('header', $data);
+		$this->load->view('newsletter', $flashmsg);
+		$this->load->view('footer');
+	}
+
+	public function send_newsletter() {
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('password', 'Praegune parool', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('npassword', 'Uus parool', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('anpassword', 'Uus parool uuesti', 'required|trim|matches[npassword]|xss_clean');
+		$this->form_validation->set_rules('title', 'Pealkiri', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('content', 'Sisu', 'required|trim|xss_clean');
 
 		if ($this->form_validation->run()) {
 			$this->load->model('user_model');
-			$email = $this->session->userdata('email');
 
-			if ($this->user_model->is_password_correct_by_email($email, $this->input->post('password'))) {
-				if ($this->user_model->change_password_by_email($email, $this->input->post('npassword'))) {
-					$this->session->set_flashdata('msg', 'Parool edukalt muudetud');
-				}
-				else {
-					$this->session->set_flashdata('msg', 'Parooli ei muudetud');
+			$this->load->library(
+				'email',
+				array(
+					'mailtype' => 'html',
+				)
+			);
+			$users = $this->user_model->get_all_users_with_newsletter_subscription();
+
+			if (!empty($users)) {
+				foreach ($users as $user) {
+					// email send data
+					$this->email->from($this->config->item('email'), 'FireChrome');
+					$this->email->to($user->email);
+					$this->email->subject($this->input->post('title'));
+				
+					// send email message and key to user
+					$this->email->message($this->input->post('content'));
+				
+					if ($this->email->send()) {
+						$this->session->set_flashdata("msg", "Kasutajatele uudiskiri saadetud!");
+					}
+					else {
+						$this->session->set_flashdata("msg", "Kasutajatele uudiskirja ei saadetud!");
+					}
 				}
 			}
 			else {
-				$this->session->set_flashdata('msg', 'Olemasolev parool oli sisestatud valesti');
+				$this->session->set_flashdata("msg", "Ükski kasutaja ei soovi uudiskirju!");
 			}
 		}
-		else{
-			$this->session->set_flashdata('msg', 'Paroolid ei ühti');
+		else {
+			$this->session->set_flashdata("msg", "Täitke väljad!");
 		}
-		redirect('main/settings', 'refresh');
+		redirect('main/write_newsletter');
 	}
 
 	/**

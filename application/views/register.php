@@ -22,6 +22,10 @@
 	echo form_password('cpassword');
 	echo "</p>";
 
+	echo "<p>Soovin uudiskirja?: ";
+	echo form_checkbox('wants_newsletter', $this->input->post('wants_newsletter'));
+	echo "</p>";
+
 	echo recaptcha_get_html(RECAPTCHA_PUBLIC_KEY);
 
 	echo "<p>";

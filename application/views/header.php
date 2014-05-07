@@ -52,6 +52,7 @@
 				<?php } ?>
 				<?php if ($session_data['level'] > 1) { ?>
 					<li><a id="add-news-btn" href="<?php echo base_url() . "news/add_news" ?>">Lisa uudis</a></li>
+					<li><a id="write-newsletter-btn" href="<?php echo base_url() . "main/write_newsletter" ?>">Koosta uudiskiri</a></li>
 				<?php } ?>
 				</ul>
 			</div>

@@ -20,11 +20,11 @@ class MY_Controller extends CI_Controller {
 		);
 	}
 
-	public function get_session_data(){
+	public function get_session_data() {
 		return $this->sessionData;
 	}
 
-	public function user_has_access($level){
+	public function user_has_access($level) {
 		return $this->sessionData['level'] >= $level;
 	}
 
