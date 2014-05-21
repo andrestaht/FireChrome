@@ -6,12 +6,16 @@ class Comment extends MY_Controller {
 	 * Index Page for news controller.
 	 */
 	public function index($id) {
+		$this->load->model("user_model");
 		$this->load->model('news_model');
 		$this->load->model('category_model');
 
+		$session_data = $this->get_session_data();
+		
 		$data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 		$this->load->view('header', $data);
 		$this->load->view('news', $this->news_model->get_news_by_id($id));

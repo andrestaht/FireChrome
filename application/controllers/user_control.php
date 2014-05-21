@@ -5,6 +5,8 @@ class User_control extends MY_Controller {
 	public function index() {
 		$this->load->model("user_model");
 		$this->load->model('category_model');
+		
+		$session_data = $this->get_session_data();
 
 		$data = array(
 			'users' => $this->user_model->get_all_users(),
@@ -12,8 +14,9 @@ class User_control extends MY_Controller {
 		);
 
 		$header_data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 		$this->load->view('header', $header_data);
 
@@ -30,6 +33,7 @@ class User_control extends MY_Controller {
 		$this->load->model("user_model");
 		$this->load->model('category_model');
 
+		$session_data = $this->get_session_data();
 		$post = array();
 
 		foreach ($this->input->post() as $id => $post_data) {
@@ -48,8 +52,9 @@ class User_control extends MY_Controller {
 			'confirmation' => "Andmed muudetud",
 		);
 		$header_data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 		$this->load->view('header', $header_data);
 		$this->load->view("user_control", $data);
@@ -69,7 +74,7 @@ class User_control extends MY_Controller {
 
 		$this->user_model->update_newsletter_subscription($user_id, null);
 
-		redirect('main/settings', 'refresh');
+		redirect('main/index/1', 'refresh');
 	}
 
 	public function add_newsletter_subscription($user_id) {
@@ -77,7 +82,33 @@ class User_control extends MY_Controller {
 
 		$this->user_model->update_newsletter_subscription($user_id, true);
 
-		redirect('main/settings', 'refresh');
+		redirect('main/index/1', 'refresh');
+	}
+	
+	/**
+	 * Change password page for main controller.
+	 */
+	public function change_password() {
+		$this->load->model('user_model');
+		$this->load->model('category_model');
+
+		$session_data = $this->get_session_data();
+
+		$data = array(
+			'session_data' => $session_data,
+			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
+		);
+		$this->load->view('header', $data);
+
+		if ($this->session->userdata('is_logged_in')) {
+			$flashmsg["msg"] = $this->session->flashdata("msg");
+			$this->load->view('change_password', $flashmsg);
+		}
+		else {
+			$this->load->view('no_access');
+		}
+		$this->load->view('footer');
 	}
 
 	/**
@@ -109,7 +140,7 @@ class User_control extends MY_Controller {
 		else{
 			$this->session->set_flashdata('msg', 'Paroolid ei ühti');
 		}
-		redirect('main/settings', 'refresh');
+		redirect('main/index/1', 'refresh');
 	}
 }
 

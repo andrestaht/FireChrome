@@ -6,13 +6,17 @@ class News extends MY_Controller {
 	 * Index Page for news controller.
 	 */
 	public function index($id) {
+		$this->load->model("user_model");
 		$this->load->model('news_model');
 		$this->load->model('comment_model');
 		$this->load->model('category_model');
 
+		$session_data = $this->get_session_data();
+		
 		$data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 		$this->load->view('header', $data);
 		$this->load->view('news', $this->news_model->get_news_by_id($id));
@@ -29,11 +33,15 @@ class News extends MY_Controller {
 	 * @param int $id
 	 */
 	public function add_news() {
+		$this->load->model("user_model");
 		$this->load->model('category_model');
 
+		$session_data = $this->get_session_data();
+		
 		$data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 		$this->load->view('header', $data);
 
@@ -108,11 +116,15 @@ class News extends MY_Controller {
 			redirect('main');
 		}
 		else {
+			$this->load->model("user_model");
 			$this->load->model('category_model');
 
+			$session_data = $this->get_session_data();
+			
 			$data = array(
-				'session_data' => $this->get_session_data(),
+				'session_data' => $session_data,
 				'menu_data' => $this->category_model->get_all_categories(),
+				'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 			);
 			$this->load->view('header', $data);
 			$this->load->view('no_access');
@@ -126,12 +138,16 @@ class News extends MY_Controller {
 	 * @param int $id
 	 */
 	public function modify_news($id) {
+		$this->load->model("user_model");
 		$this->load->model('news_model');
 		$this->load->model('category_model');
 
+		$session_data = $this->get_session_data();
+		
 		$data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 		$this->load->view('header', $data);
 

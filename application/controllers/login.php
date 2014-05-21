@@ -24,15 +24,20 @@ class Login extends MY_Controller {
 	 * Login Page login function.
 	 */
 	public function login() {
+		$this->load->model("user_model");
 		$this->load->model('category_model');
 
 		$this->session->set_userdata('url_before_login', $_SERVER['HTTP_REFERER']);
 
+		$session_data = $this->get_session_data();
+		
 		$data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 		$flashdata["msg"]=$this->session->flashdata("msg");
+		
 		$this->load->view('header', $data);
 		$this->load->view('login', $flashdata);
 		$this->load->view('footer');
@@ -144,13 +149,18 @@ class Login extends MY_Controller {
 	}
 
 	public function forgot_password() {
+		$this->load->model("user_model");
 		$this->load->model('category_model');
 
+		$session_data = $this->get_session_data();
+		
 		$data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
-		$flashdata["msg"]=$this->session->flashdata("msg");
+		$flashdata["msg"] = $this->session->flashdata("msg");
+		
 		$this->load->view('header', $data);
 		$this->load->view('forgot_password', $flashdata);
 		$this->load->view('footer');

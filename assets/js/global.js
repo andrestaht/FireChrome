@@ -37,6 +37,14 @@ $(document).ready(function() {
 		$('.menu-item.active').removeClass('active');
 		$(this).parent().addClass('active');
 	});
+    
+    $('#settings').click(function() {
+		$(this).toggleClass('active');
+	});
+    
+    $('#menu-button').click(function() {
+		$(this).toggleClass('active');
+	});
 
 	$('.back-to-top').click(function (e) {
 		$('html, body').animate({scrollTop: '0px'}, 300);

@@ -68,18 +68,21 @@ class News_model extends CI_Model {
 	 * @return array $data
 	 */
 	public function get_news($category_id) {
+		$this->db->select($this->name . '.*, category.id AS category_id, category.name AS category_name');
+
 		if ($category_id != null) {
 			if ($category_id == MOST_VIEWED_ID) {
-				$this->db->order_by('view_count desc, id desc');
+				$this->db->order_by('view_count desc, ' . $this->name . '.id desc');
 			}
 			elseif ($category_id != MAIN_PAGE_ID) {
-				$this->db->order_by('id', 'desc');
+				$this->db->order_by($this->name . '.id', 'desc');
 				$this->db->where('category_id', $category_id);
 			}
 			else {
-				$this->db->order_by('id', 'desc');
+				$this->db->order_by($this->name . '.id', 'desc');
 			}
 		}
+		$this->db->join('category', 'category.id = ' . $this->name . '.category_id');
 		$newsQuery = $this->db->get($this->name);
 
 		return $newsQuery->result();
@@ -132,10 +135,11 @@ class News_model extends CI_Model {
 	 */
 	public function search_news($string) {
 		if (!empty($string)) {
-			$this->db->select('*');
+			$this->db->select($this->name . '.*, category.id AS category_id, category.name AS category_name');
 			$this->db->from($this->name);
 			$this->db->like('title', $string);
 			$this->db->or_like('content', $string);
+			$this->db->join('category', 'category.id = ' . $this->name . '.category_id');
 
 			$query = $this->db->get();
 			$results = $query->result();
@@ -147,6 +151,8 @@ class News_model extends CI_Model {
 					'id' => $row->id,
 					'title' => $row->title,
 					'img_url' => $row->img_url,
+					'category_name' => $row->category_name,
+					'content' => $row->content,
 					'is_visible' => $row->is_visible,
 				);
 			}

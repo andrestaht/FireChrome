@@ -124,18 +124,20 @@ class User_model extends CI_Model {
 		$this->db->delete($this->name, array('id' => $id));
 	}
 
-	public function check_if_user_wants_newsletter($id) {
-		$this->db->select("wants_newsletter");
-
-		$this->db->where('id', $id);
-
-		$this->db->cache_off();
-		$query = $this->db->get($this->name);
-		$data = $query->row();
-
-		if ($data->wants_newsletter != null) {
-			return true;
-		}
+	public function check_if_user_wants_newsletter($id = null) {
+		if ($id != null) {
+            $this->db->select("wants_newsletter");
+    
+            $this->db->where('id', $id);
+    
+            $this->db->cache_off();
+            $query = $this->db->get($this->name);
+            $data = $query->row();
+    
+            if ($data->wants_newsletter != null) {
+                return true;
+            }
+        }
 		return false;
 	}
 

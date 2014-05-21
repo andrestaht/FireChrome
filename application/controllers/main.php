@@ -6,13 +6,17 @@ class Main extends MY_Controller {
 	 * Index page for main controller.
 	 */
 	public function index($category_id = null) {
+		$this->load->model("user_model");
 		$this->load->model('category_model');
 		$this->load->model('news_model');
 
+		$session_data = $this->get_session_data();
+		
 		$data = array(
-			'session_data' => $this->get_session_data(),
+			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
 			'news_data' => $this->news_model->get_news($category_id),
+			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
 		);
 
 		$flashmsg["msg"] = $this->session->flashdata("msg");
@@ -21,39 +25,17 @@ class Main extends MY_Controller {
 		$this->load->view('footer');
 	}
 
-	/**
-	 * Settings page for main controller.
-	 */
-	public function settings() {
-		$this->load->model('user_model');
+	public function write_newsletter() {
+		$this->load->model("user_model");
+		$this->load->model('news_model');
 		$this->load->model('category_model');
 
 		$session_data = $this->get_session_data();
-
+		
 		$data = array(
 			'session_data' => $session_data,
 			'menu_data' => $this->category_model->get_all_categories(),
 			'wants_newsletter' => $this->user_model->check_if_user_wants_newsletter($session_data['user_id']),
-		);
-		$this->load->view('header', $data);
-
-		if ($this->session->userdata('is_logged_in')) {
-			$flashmsg["msg"] = $this->session->flashdata("msg");
-			$this->load->view('settings', $flashmsg);
-		}
-		else {
-			$this->load->view('no_access');
-		}
-		$this->load->view('footer');
-	}
-
-	public function write_newsletter() {
-		$this->load->model('news_model');
-		$this->load->model('category_model');
-
-		$data = array(
-			'session_data' => $this->get_session_data(),
-			'menu_data' => $this->category_model->get_all_categories(),
 		);
 		$flashmsg["msg"] = $this->session->flashdata("msg");
 
@@ -131,7 +113,7 @@ class Main extends MY_Controller {
 
 			redirect($this->facebook->getLogoutUrl($args));
 		}
-		redirect('main', 'refresh');
+		redirect('main/index/1', 'refresh');
 	}
 }
 

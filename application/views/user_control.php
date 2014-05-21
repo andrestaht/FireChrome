@@ -21,7 +21,7 @@
 						echo "<td><input type='hidden' name='" . "$row->id[wants_newsletter]" . "' value='0'" . ($row->wants_newsletter != null ? "checked" : "") . "></td>";
 						echo "<td><input type='checkbox' name='" . "$row->id[wants_newsletter]" . "' value='1'" . ($row->wants_newsletter != null ? "checked" : "") . "></td>";
 
-						echo "<td><a class='delete-user-btn' href='" . base_url() . "user_control/delete_user/" . $row->id . "'>Kustuta</a></td>";
+						echo "<td><a class='delete-button' href='" . base_url() . "user_control/delete_user/" . $row->id . "' title='Kustuta'></a></td>";
 					echo "</tr>";
 				}
 			?>

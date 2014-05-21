@@ -14,10 +14,10 @@
 		echo form_password('password');
 		echo "</p>";
 	
-		echo "<p>";
+		echo "<p class='login'>";
 		echo form_submit('login-submit-btn', 'Logi Sisse');
 		?>
-		<a href="<?php echo base_url() . "login/facebook_login" ?>">Facebook</a>
+		</p><p><a class="facebook" href="<?php echo base_url() . "login/facebook_login" ?>" title='Facebook'></a>
 		<?php
 		echo "</p>";
 	
