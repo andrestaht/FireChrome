@@ -13,44 +13,44 @@
 	</head>
 	<body class="no-js">
 		<div id="menu-bar">
-            <div class="wrap">
-                <div id="menu-button"><span></span></div>
-                <ul>
+			<div class="wrap">
+				<div id="menu-button"><span></span></div>
+				<ul>
 				<?php foreach ($menu_data as $menu_item) { ?>
 					<li class="menu-item"><a id="menu-item-<?php echo $menu_item->id ?>" href="<?php echo base_url() . "main/index/" . $menu_item->id ?>"><?php echo $menu_item->name ?></a></li>
-				<?php } ?>				
+				<?php } ?>
 				</ul>
-                <div id="header-login">
-                    <?php if (empty($session_data['is_logged_in'])) { ?>
-                    <a id="login" href="<?php echo base_url() . "login" ?>" title="Logi Sisse"></a>
-                    <a id="register" href="<?php echo base_url() . "register" ?>" title="Registreeri"></a>
-                    <?php } else { ?>                        
-                    <a id="logout" href="<?php echo base_url() . "main/logout" ?>" title="Logi välja"></a>  
-                    <?php if (empty($session_data['is_facebook_account'])) { ?>
-                    <a id="settings" href="javascript:void(0);" title="Seaded"></a>
-                    <ul>
-                        <li>
-                            <?php if ($wants_newsletter) { ?>
-                            <a class="change-newletter-link" href="<?php echo base_url() . 'user_control/remove_newsletter_subscription/' . $session_data['user_id'] ?>">Loodun uudiskirjast</a>
-                            <?php } else { ?>
-                            <a class="change-newletter-link" href="<?php echo base_url() . 'user_control/add_newsletter_subscription/' . $session_data['user_id'] ?>">Liitun uudiskirjaga</a>
-                            <?php } ?>
-                        </li>
-                        <li>
-                            <?php if ($session_data['level'] > 5) { ?>
-                            <a id="usercontrol" href="<?php echo base_url() . "user_control" ?>">Halda Kasutajaid</a>
-                            <?php } ?>
-                        </li>
-                        <li>
-                            <a id="change-password-link" href="<?php echo base_url() . "user_control/change_password" ?>">Muuda parooli</a>
-                        </li>
-                    </ul>
-                    <?php } ?>                  
-                    <p id="user"><?php echo $session_data['username']; ?></p>
-                    <?php } ?>
-                </div>                
-            </div>
-        </div>
+				<div id="header-login">
+				<?php if (empty($session_data['is_logged_in'])) { ?>
+					<a id="login" href="<?php echo base_url() . "login" ?>" title="Logi Sisse"></a>
+					<a id="register" href="<?php echo base_url() . "register" ?>" title="Registreeri"></a>
+				<?php } else { ?>
+					<a id="logout" href="<?php echo base_url() . "main/logout" ?>" title="Logi välja"></a>
+					<?php if (empty($session_data['is_facebook_account'])) { ?>
+					<a id="settings" href="javascript:void(0);" title="Seaded"></a>
+						<ul>
+							<li>
+							<?php if ($wants_newsletter) { ?>
+								<a class="change-newletter-link" href="<?php echo base_url() . 'user_control/remove_newsletter_subscription/' . $session_data['user_id'] ?>">Loobun uudiskirjast</a>
+							<?php } else { ?>
+								<a class="change-newletter-link" href="<?php echo base_url() . 'user_control/add_newsletter_subscription/' . $session_data['user_id'] ?>">Liitun uudiskirjaga</a>
+							<?php } ?>
+							</li>
+							<li>
+							<?php if ($session_data['level'] > 5) { ?>
+								<a id="usercontrol" href="<?php echo base_url() . "user_control" ?>">Halda Kasutajaid</a>
+							<?php } ?>
+							</li>
+							<li>
+								<a id="change-password-link" href="<?php echo base_url() . "user_control/change_password" ?>">Muuda parooli</a>
+							</li>
+						</ul>
+					<?php } ?>
+					<p id="user"><?php echo $session_data['username']; ?></p>
+				<?php } ?>
+				</div>
+			</div>
+		</div>
 		<div class="wrap">
 			<div id="header">
 				<div id="header-left">
@@ -71,14 +71,10 @@
                             echo form_close();
                         ?>
                     </div>
-					<!--div id="current-time">
-					</div-->
 					<?php if ($session_data['level'] > 1) { ?>
 					<a id="add-news-btn" href="<?php echo base_url() . "news/add_news" ?>">Lisa uudis</a>
 					<a id="write-newsletter-btn" href="<?php echo base_url() . "main/write_newsletter" ?>">Koosta uudiskiri</a>
 				<?php } ?>
-					
 				</div>
 			</div>
-			
 			<div id="content">

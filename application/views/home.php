@@ -7,8 +7,8 @@
 				if (!empty($news->is_visible) || $session_data['level'] > 1) {
 					echo '<div class="news"><div class="category">' . $news->category_name . '</div><a href="' . base_url() . 'news/index/' . $news->id . '">';
 					echo '<img src="' . $news->img_url . '" alt="' . $news->title . '" width="250" height="250" />';
-					echo '<h2 class="news-title">' . $news->title . '</h2>';
-					echo '<p class="news-content">' . substr($news->content, 0, 150) .'...</p></a>';
+					echo '<span class="news-title">' . $news->title . '</span>';
+					echo '<span class="news-content">' . substr($news->content, 0, 150) .'...</span></a>';
 
 					if (empty($news->is_visible)) {
 						echo '<span class="news-is-invisible">Uudis pole nähtav</span>';

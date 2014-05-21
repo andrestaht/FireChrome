@@ -1,16 +1,6 @@
 var noMoreData = false;
 
-$(window).load(function() {
-	startTime();
-});
-
 $(document).ready(function() {
-	$('body').removeClass('no-js');
-	$('body').addClass('js');
-
-	$('#change-password-link').click(function() {
-		$('#change-password-form').slideDown();
-	});
 	var newsPerLoad = 12;
 	var categoryId;
 
@@ -37,17 +27,13 @@ $(document).ready(function() {
 		$('.menu-item.active').removeClass('active');
 		$(this).parent().addClass('active');
 	});
-    
-    $('#settings').click(function() {
-		$(this).toggleClass('active');
-	});
-    
-    $('#menu-button').click(function() {
+
+	$('#settings').click(function() {
 		$(this).toggleClass('active');
 	});
 
-	$('.back-to-top').click(function (e) {
-		$('html, body').animate({scrollTop: '0px'}, 300);
+	$('#menu-button').click(function() {
+		$(this).toggleClass('active');
 	});
 });
 
@@ -72,39 +58,6 @@ function showNews(newsPerLoad) {
 		counter++;
 	});
 }
-
-/*
-function loadNews(loadNewsCount, newsPerLoad, categoryId) {
-	if (noMoreData === false) {
-		$.ajax({
-			type: "GET",
-			url: getBaseURL() + 'news/get_news/' + loadNewsCount + '/' + newsPerLoad + '/' + categoryId,
-			dataType: 'html',
-			beforeSend: function() {
-				$('.ajax-loader').show();
-			},
-			success: function(data) {
-				if (data) {
-					$('.ajax-loader').before(data);
-
-					if ($(data).size() < newsPerLoad) {
-						noMoreData = true;
-					}
-				}
-				else {
-					noMoreData = true;
-				}
-			}
-		});
-		$('.ajax-loader').hide();
-	}
-	else {
-		if ($('.ajax-loader').length > 0) {
-			$('.ajax-message').html('Kõik uudised on laetud');
-		}
-	}
-}
-*/
 
 function addComment() {
 	var pathArray = window.location.pathname.split('/');
@@ -136,7 +89,7 @@ function addComment() {
 }
 
 
-function updateComments(newsId){
+function updateComments(newsId) {
 	$.ajax({
 		type: "GET",
 		url: getBaseURL() + 'comment/load_comments/' + newsId,
@@ -147,44 +100,20 @@ function updateComments(newsId){
 	})
 }
 
-function deleteComment(Id,Caller){
+function deleteComment(id, caller) {
 	var pathArray = window.location.pathname.split('/');
 	var newsId= pathArray[pathArray.length - 1];
-	
+
 	$.ajax({
 		type: "GET",
-		url: getBaseURL() + 'comment/delete_comment/' + Id,
+		url: getBaseURL() + 'comment/delete_comment/' + id,
 		dataType: 'html',
 		success: function(data) {
 			alert(data);
-			$(Caller).closest(".comment").hide();
+
+			$(caller).closest(".comment").hide();
 		}
 	});
-}
-
-
-function startTime() {
-	var today = new Date();
-
-	var h = today.getHours();
-	var m = today.getMinutes();
-	var s = today.getSeconds();
-
-	m = checkTime(m);
-	s = checkTime(s);
-
-	$('#current-time').html(h + ":" + m + ":" + s);
-
-	t = setTimeout(function() {
-		startTime()
-	}, 500);
-}
-
-function checkTime(i) {
-	if (i < 10) {
-		i = "0" + i;
-	}
-	return i;
 }
 
 function getBaseURL() {
