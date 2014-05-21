@@ -31,7 +31,7 @@
                     <ul>
                         <li>
                             <?php if ($wants_newsletter) { ?>
-                            <a class="change-newletter-link" href="<?php echo base_url() . 'user_control/remove_newsletter_subscription/' . $session_data['user_id'] ?>">Loodun uudiskirjast</a>
+                            <a class="change-newletter-link" href="<?php echo base_url() . 'user_control/remove_newsletter_subscription/' . $session_data['user_id'] ?>">Loobun uudiskirjast</a>
                             <?php } else { ?>
                             <a class="change-newletter-link" href="<?php echo base_url() . 'user_control/add_newsletter_subscription/' . $session_data['user_id'] ?>">Liitun uudiskirjaga</a>
                             <?php } ?>

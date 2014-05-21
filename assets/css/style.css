@@ -650,7 +650,7 @@ input[type="submit"]:focus {
     #menu-bar ul {
         display: none;
         position: absolute;
-        top 0;
+        top: 0;
         left: 0;
         background: #d95418;
         margin-top: 36px;
