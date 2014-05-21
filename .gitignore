@@ -13,3 +13,4 @@ FireChrome/application/config/database.php
 .buildpath
 .settings/org.eclipse.wst.common.project.facet.core.xml
 .settings/org.eclipse.php.core.prefs
+uploads/

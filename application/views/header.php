@@ -58,19 +58,19 @@
 				</div>
 				<div id="header-right">
 					<div id="search-form">
-                        <?php
-                            $form_entry = array('entry' => 's_entry');
-    
-                            echo form_open('search_results');
-    
-                            echo "<div>";
-                            echo form_input('s_result', $this->input->post('s_result'));
-                            echo form_submit('search_results');
-                            echo "</div>";
-    
-                            echo form_close();
-                        ?>
-                    </div>
+					<?php
+						$form_entry = array('entry' => 's_entry');
+
+						echo form_open('search_results');
+
+						echo "<div>";
+						echo form_input('s_result', $this->input->post('s_result'));
+						echo form_submit('search_results');
+						echo "</div>";
+
+						echo form_close();
+					?>
+					</div>
 					<?php if ($session_data['level'] > 1) { ?>
 					<a id="add-news-btn" href="<?php echo base_url() . "news/add_news" ?>">Lisa uudis</a>
 					<a id="write-newsletter-btn" href="<?php echo base_url() . "main/write_newsletter" ?>">Koosta uudiskiri</a>
